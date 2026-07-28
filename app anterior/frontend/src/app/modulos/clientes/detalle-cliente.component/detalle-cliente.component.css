@@ -1,0 +1,777 @@
+/* TABS */
+.tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: var(--space-lg);
+  border-bottom: 2px solid var(--gray-200);
+  overflow-x: auto;
+}
+
+.tab {
+  padding: 0.625rem 1rem;
+  /* Reducido */
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  color: var(--gray-600);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  font-size: 0.875rem;
+}
+
+.tab:hover {
+  color: var(--primary);
+  background-color: var(--gray-50);
+}
+
+.tab.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+  background-color: rgba(139, 92, 246, 0.05);
+  font-weight: 600;
+}
+
+/* CONTENIDO DE TABS */
+.tab-content {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* VISTA DE INFORMACIÓN */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-md);
+  /* Reducido */
+  padding: var(--space-md);
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  /* Reducido */
+  padding: var(--space-sm);
+  /* Reducido */
+  background-color: var(--gray-50);
+  border-radius: var(--radius-md);
+  border-left: 3px solid var(--primary);
+}
+
+.info-item strong {
+  color: var(--gray-600);
+  font-size: 0.75rem;
+  /* Reducido */
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+.info-item span {
+  color: var(--gray-900);
+  font-size: 0.9375rem;
+  /* Reducido */
+  font-weight: 500;
+}
+
+.info-item.full-width {
+  grid-column: 1 / -1;
+}
+
+/* SEPARADORES VISUALES */
+.info-section-divider {
+  grid-column: 1 / -1;
+  height: 2px;
+  background: linear-gradient(to right, var(--primary), transparent);
+  margin: var(--space-sm) 0;
+  position: relative;
+}
+
+.info-section-divider::before {
+  content: attr(data-label);
+  position: absolute;
+  top: -8px;
+  left: 0;
+  background: white;
+  padding: 0 var(--space-sm);
+  color: var(--primary);
+  font-weight: 600;
+  font-size: 0.8125rem;
+}
+
+/* Separador específico para Fórmulas */
+.formula-separator {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin: var(--space-md) 0;
+}
+
+.formula-separator::before,
+.formula-separator::after {
+  content: '';
+  flex: 1;
+  height: 2px;
+  background: linear-gradient(to right, var(--primary-light), transparent);
+}
+
+.formula-separator::before {
+  background: linear-gradient(to left, var(--primary-light), transparent);
+}
+
+.formula-label {
+  color: var(--primary);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  /* Reducido */
+  white-space: nowrap;
+}
+
+/* FORMULARIOS DENTRO DE DETALLE */
+.form-estado,
+.form-visita {
+  background: var(--gray-50);
+  padding: var(--space-lg);
+  /* Reducido */
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--gray-200);
+  margin-top: var(--space-md);
+}
+
+.form-estado .form-section-title,
+.form-visita .form-section-title {
+  margin-top: 0;
+}
+
+/* Subsecciones dentro del formulario */
+.form-subsection {
+  background: white;
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-md);
+  border-left: 3px solid var(--primary-light);
+}
+
+.form-subsection:last-of-type {
+  margin-bottom: var(--space-lg);
+}
+
+/* ESTADOS VACÍOS */
+.empty-state {
+  text-align: center;
+  padding: var(--space-xl);
+  color: var(--gray-500);
+  background: var(--gray-50);
+  border-radius: var(--radius-lg);
+  border: 2px dashed var(--gray-300);
+  font-size: 0.875rem;
+}
+
+.empty-state p {
+  margin-bottom: var(--space-md);
+  font-size: 0.9375rem;
+}
+
+/* LISTA DE VISITAS */
+.visitas-lista {
+  display: grid;
+  gap: var(--space-md);
+  /* Reducido */
+  margin-top: var(--space-lg);
+}
+
+.visita-card {
+  background: white;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  /* Reducido */
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.visita-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.visita-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-md);
+  /* Reducido */
+  padding-bottom: var(--space-sm);
+  border-bottom: 2px solid var(--gray-100);
+}
+
+.visita-header h3 {
+  font-size: 1rem;
+  /* Reducido */
+  color: var(--gray-900);
+  font-weight: 600;
+}
+
+/* Badges - COMPACTOS */
+.badge {
+  padding: 0.25rem 0.75rem;
+  /* Reducido */
+  border-radius: var(--radius-xl);
+  font-size: 0.75rem;
+  /* Reducido */
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.badge-tipo {
+  background-color: var(--primary);
+  color: white;
+}
+
+/* Colores específicos por tipo */
+.badge[data-tipo="Raiz"] {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+}
+
+.badge[data-tipo="Largo"] {
+  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+}
+
+.badge[data-tipo="Matiz"] {
+  background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+}
+
+.badge[data-tipo="Cambio de color"] {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+}
+
+.visita-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  /* Reducido */
+}
+
+.visita-body p {
+  color: var(--gray-700);
+  line-height: 1.5;
+  display: flex;
+  gap: var(--space-xs);
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.visita-body p strong {
+  color: var(--gray-900);
+  min-width: 100px;
+  /* Reducido */
+  font-size: 0.8125rem;
+}
+
+/* BARRA DE FILTROS */
+.filter-bar {
+  background: var(--gray-50);
+  padding: var(--space-md);
+  /* Reducido */
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--gray-200);
+  margin-bottom: var(--space-lg);
+}
+
+.filter-title {
+  font-size: 1rem;
+  /* Reducido */
+  font-weight: 600;
+  color: var(--gray-800);
+  margin-bottom: var(--space-md);
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.filter-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  /* Cambio: 2 columnas en lugar de 3 */
+  gap: var(--space-md);
+}
+
+.filter-actions {
+  display: flex;
+  gap: var(--space-sm);
+  justify-content: flex-end;
+}
+
+.filter-info {
+  color: var(--gray-600);
+  font-size: 0.8125rem;
+  text-align: right;
+  margin-top: var(--space-xs);
+}
+
+/* PAGINACIÓN */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  background: white;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  margin-top: var(--space-lg);
+}
+
+.pagination-btn {
+  padding: 0.5rem 1rem;
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background-color: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.pagination-btn:disabled {
+  background-color: var(--gray-300);
+  color: var(--gray-500);
+  cursor: not-allowed;
+  transform: none;
+}
+
+.pagination-numbers {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+}
+
+.pagination-number {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid var(--gray-300);
+  background-color: white;
+  color: var(--gray-700);
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pagination-number:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  transform: translateY(-1px);
+}
+
+.pagination-number.active {
+  background-color: var(--primary);
+  color: white;
+  border-color: var(--primary);
+  transform: scale(1.05);
+}
+
+.pagination-ellipsis {
+  color: var(--gray-400);
+  padding: 0 0.25rem;
+  font-weight: bold;
+  font-size: 0.875rem;
+}
+
+.pagination-info {
+  text-align: center;
+  color: var(--gray-600);
+  font-size: 0.8125rem;
+  padding: var(--space-xs);
+}
+
+/* BOTÓN DE ACCIÓN EN INFO-GRID */
+.info-grid .btn-editar {
+  grid-column: 1 / -1;
+  justify-self: end;
+  margin-top: var(--space-sm);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tabs {
+    font-size: 0.8125rem;
+  }
+
+  .tab {
+    padding: 0.5rem 0.75rem;
+  }
+
+  .visita-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-xs);
+  }
+
+  .filter-row {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-actions {
+    flex-direction: column;
+  }
+
+  .filter-actions button {
+    width: 100%;
+  }
+
+  .pagination {
+    flex-wrap: wrap;
+  }
+
+  .pagination-numbers {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    margin-top: var(--space-sm);
+  }
+}
+
+@media (max-width: 640px) {
+  .form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .form-actions button {
+    width: 100%;
+  }
+}
+
+/* ANIMACIONES ADICIONALES */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+  }
+
+  to {
+    opacity: 1;
+    max-height: 1000px;
+  }
+}
+
+.form-estado,
+.form-visita {
+  animation: slideDown 0.3s ease-out;
+}
+
+/* MEJORAS VISUALES */
+
+/* Sombra suave al hacer hover en info-items */
+.info-item:hover {
+  background-color: white;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s ease;
+}
+
+/* Efecto de focus mejorado */
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  transform: translateY(-1px);
+}
+
+/* Indicador visual para campos con valor */
+.form-group input:not(:placeholder-shown),
+.form-group textarea:not(:placeholder-shown) {
+  background-color: rgba(139, 92, 246, 0.02);
+}
+
+/* ========================================
+   ESTILOS PARA FOTOS
+======================================== */
+
+/* Contenedor de fotos en vista de estado */
+.fotos-container {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-lg);
+  margin: var(--space-md) 0;
+}
+
+.foto-item {
+  background: white;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.foto-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-sm);
+  padding-bottom: var(--space-xs);
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.foto-header strong {
+  font-size: 0.875rem;
+  color: var(--gray-700);
+  text-transform: uppercase;
+}
+
+.foto-fecha {
+  font-size: 0.75rem;
+  color: var(--gray-500);
+}
+
+.foto-preview {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: var(--gray-100);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.foto-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.foto-preview img:hover {
+  transform: scale(1.05);
+}
+
+.btn-eliminar-foto {
+  position: absolute;
+  top: var(--space-sm);
+  right: var(--space-sm);
+  background: rgba(239, 68, 68, 0.9);
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 0.375rem 0.5rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(4px);
+}
+
+.btn-eliminar-foto:hover {
+  background: var(--danger);
+  transform: scale(1.1);
+}
+
+.foto-empty {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: var(--gray-100);
+  border: 2px dashed var(--gray-300);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gray-400);
+  font-size: 0.875rem;
+}
+
+/* Fotos actuales en formulario de visitas */
+.fotos-actuales {
+  background: var(--gray-50);
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--gray-200);
+  margin-bottom: var(--space-lg);
+}
+
+.subsection-title {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--gray-700);
+  margin-bottom: var(--space-sm);
+}
+
+.fotos-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-md);
+}
+
+.foto-preview-small {
+  text-align: center;
+}
+
+.foto-preview-small img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--gray-200);
+  margin-bottom: var(--space-xs);
+}
+
+.foto-label {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--gray-600);
+}
+
+/* Input de archivo personalizado */
+.input-file {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1.5px solid var(--gray-300);
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  background: white;
+  cursor: pointer;
+}
+
+.input-file::-webkit-file-upload-button {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 0.375rem 0.75rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.8125rem;
+  cursor: pointer;
+  margin-right: var(--space-sm);
+}
+
+.input-file::-webkit-file-upload-button:hover {
+  background: var(--primary-dark);
+}
+
+/* Preview de fotos en formulario */
+.foto-preview-upload {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  margin-top: var(--space-sm);
+  background: var(--gray-100);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 2px solid var(--primary-light);
+}
+
+.foto-preview-upload img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.btn-remove-preview {
+  position: absolute;
+  top: var(--space-sm);
+  right: var(--space-sm);
+  background: rgba(239, 68, 68, 0.9);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(4px);
+}
+
+.btn-remove-preview:hover {
+  background: var(--danger);
+  transform: scale(1.1);
+}
+
+/* Acciones inline para fotos */
+.form-actions-inline {
+  display: flex;
+  gap: var(--space-sm);
+  justify-content: flex-end;
+  margin-top: var(--space-md);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--gray-200);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+
+  .fotos-container,
+  .fotos-preview-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ========================================
+   INDICADOR DE FOTO ANTIGUA
+======================================== */
+
+/* Contenedor de foto antigua*/
+
+.foto-preview-small.foto-antigua img {
+  border-color: rgba(114, 68, 239, 0.9);
+  box-shadow: 0 0 10px rgba(117, 38, 220, 0.5);
+}
+
+/* Badge "MÁS ANTIGUA" */
+.badge-antigua {
+  position: absolute;
+  top: var(--space-sm);
+  left: var(--space-sm);
+  background: rgba(117, 38, 220, 0.5);
+  color: white;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  z-index: 10;
+}
+
+/* Fecha resaltada */
+.fecha-antigua {
+  color: var(--gray-900);
+  font-weight: 700;
+}
+
+/* Días de antigüedad */
+.dias-antiguedad {
+  color: var(--gray-900);
+  font-weight: 700;
+}
+
+/* Contenedor de info de foto */
+.foto-info {
+  margin-top: var(--space-xs);
+  position: relative;
+}
+
+/* Asegurar que el contenedor tenga position relative */
+.foto-preview-small {
+  position: relative;
+}

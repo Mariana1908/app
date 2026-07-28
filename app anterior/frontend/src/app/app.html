@@ -1,0 +1,18 @@
+<main class="main">
+  <div class="content">
+    <h1>Servicios</h1>
+
+    <select id="servicios" [(ngModel)]="servicioSeleccionado">
+      @for (servicio of servicios; track servicio) {
+        <option [value]="servicio">{{ servicio }}</option>
+      }
+    </select>
+
+    <p>
+      Servicio seleccionado:
+      <strong>{{ servicioSeleccionado }}</strong>
+    </p>
+  </div>
+</main>
+
+<router-outlet />

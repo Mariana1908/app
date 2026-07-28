@@ -1,0 +1,101 @@
+<div class="container">
+  <div class="header">
+    <h1>📋 Clientes</h1>
+    <button class="btn-nuevo" (click)="nuevoCliente()">+ Nuevo Cliente</button>
+  </div>
+
+  <div class="search-bar">
+    <div class="search-input-group">
+      <input type="text" [(ngModel)]="searchTerm" (keyup.enter)="buscar()"
+        placeholder="🔍 Buscar por nombre o teléfono..." class="search-input">
+      <button class="btn-search" (click)="buscar()">
+        Buscar
+      </button>
+      <button class="btn-clear" (click)="limpiarBusqueda()" *ngIf="searchTerm !== ''">
+        ✕ Limpiar
+      </button>
+    </div>
+    <div class="search-info" *ngIf="!cargando">
+      <span>Mostrando {{ clientes.length }} de {{ totalRecords }} registros</span>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div class="loading" *ngIf="cargando">
+    ⏳ Cargando clientes...
+  </div>
+
+  <!-- Error -->
+  <div class="error" *ngIf="error">
+    {{ error }}
+  </div>
+
+  <!-- Tabla de Clientes -->
+  <div class="tabla-container" *ngIf="!cargando && !error">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Teléfono</th>
+          <th>Fecha Registro</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cliente of clientes">
+          <td>{{ cliente.id }}</td>
+          <td>{{ cliente.nombre }}</td>
+          <td>{{ cliente.tel }}</td>
+          <td>{{ cliente.created_at | date: 'dd/MM/yyyy' }}</td>
+          <td>
+            <button class="btn-ver btn-sm" (click)="verDetalle(cliente.id!)">
+              👁️ Ver
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Mensaje cuando no hay resultados -->
+    <div class="empty-state" *ngIf="clientes.length === 0">
+      <p>{{ searching ? 'No se encontraron resultados para tu búsqueda' : 'No hay clientes registrados' }}</p>
+    </div>
+  </div>
+
+  <!-- CONTROLES DE PAGINACIÓN -->
+  <div class="pagination" *ngIf="!cargando && !error && totalPages > 1">
+    <button class="pagination-btn" (click)="irAPaginaAnterior()" [disabled]="!hasPrevPage">
+      ← Anterior
+    </button>
+
+    <div class="pagination-numbers">
+      <!-- Primera página -->
+      <button *ngIf="currentPage > 3" class="pagination-number" (click)="irAPagina(1)">
+        1
+      </button>
+      <span *ngIf="currentPage > 3" class="pagination-ellipsis">...</span>
+
+      <!-- Números de página -->
+      <button *ngFor="let page of getPaginationNumbers()" class="pagination-number"
+        [class.active]="page === currentPage" (click)="irAPagina(page)">
+        {{ page }}
+      </button>
+
+      <!-- Última página -->
+      <span *ngIf="currentPage < totalPages - 2" class="pagination-ellipsis">...</span>
+      <button *ngIf="currentPage < totalPages - 2" class="pagination-number" (click)="irAPagina(totalPages)">
+        {{ totalPages }}
+      </button>
+    </div>
+
+    <button class="pagination-btn" (click)="irAPaginaSiguiente()" [disabled]="!hasNextPage">
+      Siguiente →
+    </button>
+  </div>
+
+  <!-- Info de paginación -->
+  <div class="pagination-info" *ngIf="!cargando && !error">
+    Página {{ currentPage }} de {{ totalPages }}
+  </div>
+</div>

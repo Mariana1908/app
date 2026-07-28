@@ -1,0 +1,5 @@
+PORT=3000
+DB_HOST=localhost
+DB_USER=root2
+DB_PASSWORD=Estetica.L30.*
+DB_NAME=estet1caleos_estetica_db

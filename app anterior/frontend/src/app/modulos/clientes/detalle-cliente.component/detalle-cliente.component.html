@@ -1,0 +1,546 @@
+<div class="container" *ngIf="!cargando && cliente">
+  <div class="header">
+    <button class="btn-volver" (click)="volver()">← Volver</button>
+    <h1>👤 {{ cliente.nombre }}</h1>
+
+    <h2>📱 {{ cliente.tel }}</h2>
+
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab" [class.active]="tabActiva === 'datos'" (click)="cambiarTab('datos')">
+      📋 Datos
+    </button>
+    <button class="tab" [class.active]="tabActiva === 'estado'" (click)="cambiarTab('estado')">
+      💇 Diagnostico
+    </button>
+    <button class="tab" [class.active]="tabActiva === 'visitas'" (click)="cambiarTab('visitas')">
+      📅 Visitas ({{ visitas.length }})
+    </button>
+  </div>
+
+  <!-- Tab: Datos -->
+  <div class="tab-content card" *ngIf="tabActiva === 'datos'">
+    <div class="info-grid">
+      <div class="info-item">
+        <strong>Teléfono:</strong>
+        <span>{{ cliente.tel }}</span>
+      </div>
+      <div class="info-item">
+        <strong>Fecha de Nacimiento:</strong>
+        <span>{{ cliente.fecha_nac ? (cliente.fecha_nac | date: 'dd/MM/yyyy') : 'No registrada' }}</span>
+      </div>
+      <div class="info-item">
+        <strong>Ciudad:</strong>
+        <span>{{ cliente.ciudad || 'No especificada' }}</span>
+      </div>
+      <div class="info-item">
+        <strong>Código Postal:</strong>
+        <span>{{ cliente.cp || 'No especificado' }}</span>
+      </div>
+      <div class="info-item full-width">
+        <strong>Domicilio:</strong>
+        <span>{{ cliente.domicilio || 'No especificado' }}</span>
+      </div>
+      <div class="info-item">
+        <strong>Instagram:</strong>
+        <span>{{ cliente.instagram || 'No disponible' }}</span>
+      </div>
+      <div class="info-item">
+        <strong>Facebook:</strong>
+        <span>{{ cliente.facebook || 'No disponible' }}</span>
+      </div>
+    </div>
+    <button class="btn-editar" (click)="editarCliente()">
+      ✏️ Editar
+    </button>
+  </div>
+
+  <!-- Tab: Estado del Cabello -->
+  <div class="tab-content card" *ngIf="tabActiva === 'estado'">
+    <div *ngIf="!estado && !mostrarFormEstado" class="empty-state">
+      <p>No hay información de estado del cabello registrada</p>
+      <button class="btn-nuevo" (click)="mostrarFormEstado = true">
+        + Registrar Estado
+      </button>
+    </div>
+
+    <!-- VISTA DEL ESTADO -->
+    <div *ngIf="estado && !mostrarFormEstado" class="info-grid">
+      <div class="info-item">
+        <strong>Color Natural:</strong>
+        <span>{{ estado.color_nat || 'No especificado' }}</span>
+      </div>
+      <div class="info-item">
+        <strong>% de Canas:</strong>
+        <span>{{ estado.porc_canas }}%</span>
+      </div>
+      <div class="info-item">
+        <strong>Textura:</strong>
+        <span>{{ estado.textura || 'No especificada' }}</span>
+      </div>
+      <div class="info-item">
+        <strong>Colorimetrista:</strong>
+        <span>{{ estado.colorimetrista || 'No especificado' }}</span>
+      </div>
+      <div class="info-item full-width">
+        <strong>Estructura del Cabello:</strong>
+        <span>{{ estado.estructura || 'No especificada' }}</span>
+      </div>
+
+      <div class="formula-separator">
+        <span class="formula-label">📸 Fotos del Cabello</span>
+      </div>
+
+      <div class="fotos-container">
+        <!-- Foto 1 -->
+        <div class="foto-item">
+          <div class="foto-header">
+            <strong>Foto 1</strong>
+            <span class="foto-fecha" *ngIf="estado.fecha_foto1">
+              {{ estado.fecha_foto1 | date: 'dd/MM/yyyy HH:mm' }}
+            </span>
+          </div>
+          <div class="foto-preview" *ngIf="estado.foto1">
+            <img [src]="estadoService.obtenerUrlFoto(estado.foto1)" [alt]="'Foto 1 - ' + cliente.nombre"
+              (click)="abrirImagenCompleta(estadoService.obtenerUrlFoto(estado.foto1))">
+            <button class="btn-eliminar-foto" (click)="eliminarFoto(1)" title="Eliminar foto">
+              🗑️
+            </button>
+          </div>
+          <div class="foto-empty" *ngIf="!estado.foto1">
+            <span>Sin foto</span>
+          </div>
+        </div>
+
+        <!-- Foto 2 -->
+        <div class="foto-item">
+          <div class="foto-header">
+            <strong>Foto 2</strong>
+            <span class="foto-fecha" *ngIf="estado.fecha_foto2">
+              {{ estado.fecha_foto2 | date: 'dd/MM/yyyy HH:mm' }}
+            </span>
+          </div>
+          <div class="foto-preview" *ngIf="estado.foto2">
+            <img [src]="estadoService.obtenerUrlFoto(estado.foto2)" [alt]="'Foto 2 - ' + cliente.nombre"
+              (click)="abrirImagenCompleta(estadoService.obtenerUrlFoto(estado.foto2))">
+            <button class="btn-eliminar-foto" (click)="eliminarFoto(2)" title="Eliminar foto">
+              🗑️
+            </button>
+          </div>
+          <div class="foto-empty" *ngIf="!estado.foto2">
+            <span>Sin foto</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="formula-separator">
+        <span class="formula-label">🧪 Fórmula Decolorante</span>
+      </div>
+
+      <div class="info-item full-width">
+        <strong>Fórmula Decolorante:</strong>
+        <span>{{ estado.form_decol || 'No especificada' }}</span>
+      </div>
+      <div class="info-item">
+        <strong>Tiempo de Pose Electro Xactor Largos:</strong>
+        <span>{{ estado.pose_decol_largos ? estado.pose_decol_largos + ' min' : 'No especificado' }}</span>
+      </div>
+      <div class="info-item">
+        <strong>Tiempo de Pose Electro Xactor Raíz:</strong>
+        <span>{{ estado.pose_decol_raiz ? estado.pose_decol_raiz + ' min' : 'No especificado' }}</span>
+      </div>
+
+      <div class="formula-separator">
+        <span class="formula-label">🎨 Fórmula Tinte</span>
+      </div>
+
+      <div class="info-item full-width">
+        <strong>Fórmula Tinte:</strong>
+        <span>{{ estado.form_tinte || 'No especificada' }}</span>
+      </div>
+      <div class="info-item">
+        <strong>Tiempo de Pose Electro Xactor Largos:</strong>
+        <span>{{ estado.pose_tinte_largos ? estado.pose_tinte_largos + ' min' : 'No especificado' }}</span>
+      </div>
+      <div class="info-item">
+        <strong>Tiempo de Pose Electro Xactor Raíz:</strong>
+        <span>{{ estado.pose_tinte_raiz ? estado.pose_tinte_raiz + ' min' : 'No especificado' }}</span>
+      </div>
+      <div class="info-item full-width">
+        <strong>Observaciones:</strong>
+        <span>{{ estado.observaciones || 'Sin observaciones' }}</span>
+      </div>
+
+      <button class="btn-editar" (click)="mostrarFormEstado = true">
+        ✏️ Actualizar Estado
+      </button>
+    </div>
+
+    <!-- FORMULARIO DE ESTADO -->
+    <form *ngIf="mostrarFormEstado" (ngSubmit)="guardarEstado()" class="form-estado">
+      <div class="form-section">
+        <h2 class="form-section-title">📋 Información Básica</h2>
+
+        <div class="form-row form-row-2">
+          <div class="form-group">
+            <label>Color Natural</label>
+            <input type="text" [(ngModel)]="estadoForm.color_nat" name="color_nat">
+          </div>
+          <div class="form-group">
+            <label>Porcentaje de Canas (%)</label>
+            <input type="number" [(ngModel)]="estadoForm.porc_canas" name="porc_canas" min="0" max="100">
+          </div>
+        </div>
+
+        <div class="form-row form-row-2">
+          <div class="form-group">
+            <label>Textura</label>
+            <input type="text" [(ngModel)]="estadoForm.textura" name="textura">
+          </div>
+          <div class="form-group">
+            <label>Colorimetrista</label>
+            <input type="text" [(ngModel)]="estadoForm.colorimetrista" name="colorimetrista">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Estructura del Cabello</label>
+          <textarea [(ngModel)]="estadoForm.estructura" name="estructura" rows="2"></textarea>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h2 class="form-section-title">🧪 Fórmula Decolorante</h2>
+
+        <div class="form-group">
+          <label>Fórmula Decolorante</label>
+          <textarea [(ngModel)]="estadoForm.form_decol" name="form_decol" rows="3"
+            placeholder="Describe la fórmula utilizada..."></textarea>
+        </div>
+
+        <div class="form-row form-row-2">
+          <div class="form-group">
+            <label>Tiempo de Pose Electro Xactor Largos (minutos)</label>
+            <input type="number" [(ngModel)]="estadoForm.pose_decol_largos" name="pose_decol_largos" min="0"
+              placeholder="Ej: 30">
+          </div>
+          <div class="form-group">
+            <label>Tiempo de Pose Electro Xactor Raíz (minutos)</label>
+            <input type="number" [(ngModel)]="estadoForm.pose_decol_raiz" name="pose_decol_raiz" min="0"
+              placeholder="Ej: 45">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h2 class="form-section-title">🎨 Fórmula Tinte</h2>
+
+        <div class="form-group">
+          <label>Fórmula Tinte</label>
+          <textarea [(ngModel)]="estadoForm.form_tinte" name="form_tinte" rows="3"
+            placeholder="Describe la fórmula utilizada..."></textarea>
+        </div>
+
+        <div class="form-row form-row-2">
+          <div class="form-group">
+            <label>Tiempo de Pose Electro Xactor Largos (minutos)</label>
+            <input type="number" [(ngModel)]="estadoForm.pose_tinte_largos" name="pose_tinte_largos" min="0"
+              placeholder="Ej: 30">
+          </div>
+          <div class="form-group">
+            <label>Tiempo de Pose Electro Xactor Raíz (minutos)</label>
+            <input type="number" [(ngModel)]="estadoForm.pose_tinte_raiz" name="pose_tinte_raiz" min="0"
+              placeholder="Ej: 45">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-group">
+          <label>Observaciones Generales</label>
+          <textarea [(ngModel)]="estadoForm.observaciones" name="observaciones" rows="4"
+            placeholder="Notas adicionales sobre el estado del cabello..."></textarea>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn-cancelar" (click)="mostrarFormEstado = false">
+          ✕ Cancelar
+        </button>
+        <button type="submit" class="btn-guardar">
+          ✓ Guardar Estado
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Tab: Visitas -->
+  <div class="tab-content card" *ngIf="tabActiva === 'visitas'">
+    <button class="btn-nuevo mb-lg" (click)="mostrarFormVisita = !mostrarFormVisita">
+      {{ mostrarFormVisita ? '✕ Cancelar' : '+ Nueva Visita' }}
+    </button>
+
+    <!-- BARRA DE FILTROS -->
+    <div class="filter-bar" *ngIf="!mostrarFormVisita">
+      <h3 class="filter-title">🔍 Filtrar Visitas</h3>
+      <div class="filter-group">
+        <div class="filter-row">
+          <div class="form-group">
+            <label>Fecha de Visita</label>
+            <input type="date" [(ngModel)]="filtroFecha" name="filtroFecha" placeholder="Selecciona una fecha">
+            <span class="form-help">Buscar visitas de una fecha específica</span>
+          </div>
+
+          <div class="form-group">
+            <label>Tipo de Visita</label>
+            <select [(ngModel)]="filtroTipo" name="filtroTipo">
+              <option value="">Todos los tipos</option>
+              <option *ngFor="let t of tiposVisita" [value]="t">{{ t }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="filter-actions">
+          <button class="btn-search" (click)="aplicarFiltros()">
+            🔍 Filtrar
+          </button>
+          <button class="btn-clear" (click)="limpiarFiltros()" *ngIf="filtroFecha || filtroTipo">
+            ✕ Limpiar Filtros
+          </button>
+        </div>
+      </div>
+
+      <div class="filter-info">
+        <span>Mostrando {{ visitas.length }} de {{ totalRecordsVisitas }} visitas</span>
+      </div>
+    </div>
+
+    <!-- Formulario de Visita -->
+    <form *ngIf="mostrarFormVisita" (ngSubmit)="guardarVisita()" class="form-visita">
+
+      <!-- SECCIÓN DE FOTOS -->
+      <div class="form-section">
+        <h2 class="form-section-title">📸 Fotos del Cabello</h2>
+
+        <p class="form-help mb-md">
+          Sube fotos actualizadas del cabello. Las fotos anteriores serán reemplazadas.
+        </p>
+
+        <!-- Mostrar fotos actuales si existen -->
+        <div class="fotos-actuales" *ngIf="estado && (estado.foto1 || estado.foto2)">
+        <h4 class="subsection-title">Fotos Actuales</h4>
+        <div class="fotos-preview-grid">
+          
+          <!-- Foto 1 -->
+          <div class="foto-preview-small" 
+               *ngIf="estado.foto1"
+               [class.foto-antigua]="esFotoMasAntigua(1)">
+            
+            <!-- Badge de "Más Antigua" -->
+            <div class="badge-antigua" *ngIf="esFotoMasAntigua(1)">
+              ⏰ MÁS ANTIGUA
+            </div>
+            
+            <img [src]="estadoService.obtenerUrlFoto(estado.foto1)" alt="Foto 1">
+            
+            <div class="foto-info">
+              <span class="foto-label" [class.fecha-antigua]="esFotoMasAntigua(1)">
+                📅 Foto 1 - {{ estado.fecha_foto1 | date: 'dd/MM/yyyy HH:mm' }}
+              </span>
+              <span class="dias-antiguedad" *ngIf="esFotoMasAntigua(1)">
+                ({{ obtenerDiasAntiguedad(estado.fecha_foto1) }} días)
+              </span>
+            </div>
+          </div>
+
+          <!-- Foto 2 -->
+          <div class="foto-preview-small" 
+               *ngIf="estado.foto2"
+               [class.foto-antigua]="esFotoMasAntigua(2)">
+            
+            <!-- Badge de "Más Antigua" -->
+            <div class="badge-antigua" *ngIf="esFotoMasAntigua(2)">
+              ⏰ MÁS ANTIGUA
+            </div>
+            
+            <img [src]="estadoService.obtenerUrlFoto(estado.foto2)" alt="Foto 2">
+            
+            <div class="foto-info">
+              <span class="foto-label" [class.fecha-antigua]="esFotoMasAntigua(2)">
+                📅 Foto 2 - {{ estado.fecha_foto2 | date: 'dd/MM/yyyy HH:mm' }}
+              </span>
+              <span class="dias-antiguedad" *ngIf="esFotoMasAntigua(2)">
+                ({{ obtenerDiasAntiguedad(estado.fecha_foto2) }} días)
+              </span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+        <!-- Formulario de subida de fotos -->
+        <div class="form-row form-row-2">
+          <div class="form-group">
+            <label>Nueva Foto 1</label>
+            <input type="file" accept="image/*" (change)="onFotoSeleccionada($event, 1)" class="input-file">
+            <div class="foto-preview-upload" *ngIf="foto1Preview">
+              <img [src]="foto1Preview" alt="Preview Foto 1">
+              <button type="button" class="btn-remove-preview" (click)="foto1Preview = null; foto1File = null">
+                ✕
+              </button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Nueva Foto 2</label>
+            <input type="file" accept="image/*" (change)="onFotoSeleccionada($event, 2)" class="input-file">
+            <div class="foto-preview-upload" *ngIf="foto2Preview">
+              <img [src]="foto2Preview" alt="Preview Foto 2">
+              <button type="button" class="btn-remove-preview" (click)="foto2Preview = null; foto2File = null">
+                ✕
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Botón para subir fotos -->
+        <div class="form-actions-inline" *ngIf="foto1File || foto2File">
+          <button type="button" class="btn-guardar" (click)="subirFotos()" [disabled]="subiendoFotos">
+            {{ subiendoFotos ? '⏳ Subiendo...' : '📤 Subir Fotos' }}
+          </button>
+          <button type="button" class="btn-cancelar" (click)="cancelarSubidaFotos()" [disabled]="subiendoFotos">
+            ✕ Cancelar
+          </button>
+        </div>
+      </div>
+
+      <!-- Fin Sección de Fotos -->
+      
+      <div class="form-section">
+        <h2 class="form-section-title">📅 Información de la Visita</h2>
+
+        <div class="form-row form-row-2">
+          <div class="form-group">
+            <label>Fecha y Hora <span class="required">*</span></label>
+            <input type="datetime-local" [(ngModel)]="visitaForm.fecha" name="fecha" required>
+          </div>
+          <div class="form-group">
+            <label>Tipo de Servicio <span class="required">*</span></label>
+            <select [(ngModel)]="visitaForm.tipo" name="tipo" required>
+              <option [value]="undefined">Seleccione...</option>
+              <option *ngFor="let t of tiposVisita" [value]="t">{{ t }}</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Campo Condicional: Tipo de Cambio -->
+        <div class="form-group" *ngIf="debeMostrarTipoCambio()">
+          <label>Tipo de Cambio <span class="required">*</span></label>
+          <select [(ngModel)]="visitaForm.tipo_cambio" name="tipo_cambio">
+            <option [value]="undefined">Seleccione...</option>
+            <option *ngFor="let tc of tiposCambio" [value]="tc">{{ tc }}</option>
+          </select>
+          <span class="form-help">Este campo es obligatorio para cambios de color</span>
+        </div>
+
+        <div class="form-group">
+          <label>Formulación</label>
+          <textarea [(ngModel)]="visitaForm.retoque" name="retoque" rows="2"
+            placeholder="Describe el proceso realizado..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Observaciones</label>
+          <textarea [(ngModel)]="visitaForm.peticiones" name="peticiones" rows="3"
+            placeholder="Notas y sugerencias de la visita..."></textarea>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn-cancelar" (click)="mostrarFormVisita = false; resetFormVisita()">
+          ✕ Cancelar
+        </button>
+        <button type="submit" class="btn-guardar">
+          ✓ Guardar Visita
+        </button>
+      </div>
+    </form>
+
+    <!-- Lista de Visitas -->
+    <div class="visitas-lista" *ngIf="!mostrarFormVisita">
+      <div class="visita-card" *ngFor="let visita of visitas">
+        <div class="visita-header">
+          <h3>📅 {{ visita.fecha | date: 'dd/MM/yyyy HH:mm' }}</h3>
+          <span class="badge badge-tipo" [attr.data-tipo]="visita.tipo">{{ visita.tipo }}</span>
+        </div>
+        <div class="visita-body">
+          <p *ngIf="visita.estilista_nombre">
+            <strong>Estilista:</strong>
+            <span>{{ visita.estilista_nombre }}</span>
+          </p>
+          <p *ngIf="visita.tipo_cambio">
+            <strong>Tipo de Cambio:</strong>
+            <span>{{ visita.tipo_cambio }}</span>
+          </p>
+          <p *ngIf="visita.retoque">
+            <strong>Retoque:</strong>
+            <span>{{ visita.retoque }}</span>
+          </p>
+          <p *ngIf="visita.peticiones">
+            <strong>Peticiones:</strong>
+            <span>{{ visita.peticiones }}</span>
+          </p>
+        </div>
+      </div>
+
+      <!-- Mensaje cuando no hay visitas -->
+      <div *ngIf="visitas.length === 0" class="empty-state">
+        <p>{{ filtrando ? '🔍 No se encontraron visitas con los filtros seleccionados' :
+          '📅 No hay visitas registradas para este cliente' }}</p>
+      </div>
+    </div>
+
+    <!-- Controles de Paginación -->
+    <div class="pagination" *ngIf="!mostrarFormVisita && totalPagesVisitas > 1">
+      <button class="pagination-btn" (click)="irAPaginaAnteriorVisitas()" [disabled]="!hasPrevPageVisitas">
+        ← Anterior
+      </button>
+
+      <div class="pagination-numbers">
+        <!-- Primera página -->
+        <button *ngIf="currentPageVisitas > 3" class="pagination-number" (click)="irAPaginaVisitas(1)">
+          1
+        </button>
+        <span *ngIf="currentPageVisitas > 3" class="pagination-ellipsis">...</span>
+
+        <!-- Números de página -->
+        <button *ngFor="let page of getPaginationNumbersVisitas()" class="pagination-number"
+          [class.active]="page === currentPageVisitas" (click)="irAPaginaVisitas(page)">
+          {{ page }}
+        </button>
+
+        <!-- Última página -->
+        <span *ngIf="currentPageVisitas < totalPagesVisitas - 2" class="pagination-ellipsis">...</span>
+        <button *ngIf="currentPageVisitas < totalPagesVisitas - 2" class="pagination-number"
+          (click)="irAPaginaVisitas(totalPagesVisitas)">
+          {{ totalPagesVisitas }}
+        </button>
+      </div>
+
+      <button class="pagination-btn" (click)="irAPaginaSiguienteVisitas()" [disabled]="!hasNextPageVisitas">
+        Siguiente →
+      </button>
+    </div>
+
+    <!-- Info de paginación -->
+    <div class="pagination-info" *ngIf="!mostrarFormVisita && totalPagesVisitas > 0">
+      Página {{ currentPageVisitas }} de {{ totalPagesVisitas }}
+    </div>
+  </div>
+</div>
+
+<div class="loading" *ngIf="cargando">
+  ⏳ Cargando información del cliente...
+</div>

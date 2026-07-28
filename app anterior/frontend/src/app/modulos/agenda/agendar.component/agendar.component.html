@@ -1,0 +1,91 @@
+<div class="container">
+  <div class="header">
+    <button class="btn-volver" (click)="volverAlPanel()">Volver al panel de citas</button>
+    <h1>Agendar Nueva Cita</h1>
+  </div>
+
+  <div class="form-container">
+    <!-- BUSCAR CLIENTE -->
+    <div class="form-group">
+      <label class="label-title">BUSCAR CLIENTE (NOMBRE O CELULAR):</label>
+      <input 
+        type="text" 
+        [(ngModel)]="clienteSearch"
+        class="input-field"
+        placeholder="Escribe nombre o teléfono..."
+      />
+    </div>
+
+    <!-- ESTILISTA -->
+    <div class="form-group">
+      <label class="label-title">ESTILISTA:</label>
+      <select [(ngModel)]="estilista" class="select-field">
+        <option value="">-- ¿Quién va a atender? --</option>
+        <option *ngFor="let est of estilistas" [value]="est.nombre">
+          {{ est.nombre }}
+        </option>
+      </select>
+    </div>
+
+    <!-- FECHA Y SERVICIO (lado a lado) -->
+    <div class="form-group-row">
+      <div class="form-group-half">
+        <label class="label-title">FECHA:</label>
+        <input 
+          type="date"
+          [(ngModel)]="fecha"
+          class="input-field"
+        />
+
+        <h2 style="color:red">AQUÍ DEBERÍA APARECER EL SERVICIO</h2>
+      </div>
+
+      <div class="form-group-half">
+        <label class="label-title">SERVICIO:</label>
+        <select [(ngModel)]="servicio" class="select-field">
+          <option value="">-- Selecciona un servicio --</option>
+          <option *ngFor="let srv of servicios" [value]="srv.nombre">
+            {{ srv.nombre }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <!-- HORAS -->
+    <div class="form-group-row">
+      <div class="form-group-half">
+        <label class="label-title">HORA DE INICIO:</label>
+        <input 
+          type="time"
+          [(ngModel)]="horaInicio"
+          class="input-field"
+        />
+      </div>
+
+      <div class="form-group-half">
+        <label class="label-title">HORA DE FIN:</label>
+        <input 
+          type="time"
+          [(ngModel)]="horaFin"
+          class="input-field"
+        />
+      </div>
+    </div>
+
+    <!-- NOTAS -->
+    <div class="form-group">
+      <label class="label-title">NOTAS / INSTRUCCIONES:</label>
+      <textarea 
+        [(ngModel)]="notas"
+        class="textarea-field"
+        placeholder="Escribe notas adicionales..."
+      ></textarea>
+    </div>
+
+    <!-- BOTONES -->
+    <div class="button-group">
+      <button (click)="agendarCita()" class="btn-agendar">Agendar Cita</button>
+      <button (click)="resetForm()" class="btn-limpiar">Limpiar Formulario</button>
+    </div>
+  </div>
+</div>

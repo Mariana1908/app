@@ -1,0 +1,57 @@
+/* Este componente usa los estilos globales compactos */
+
+.form-cliente {
+  background: white;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-xl);
+  margin-bottom: var(--space-md);
+}
+
+/* Animación al cargar */
+.container {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Estilo para campos requeridos */
+.form-group input:required,
+.form-group select:required {
+  border-left: 3px solid var(--primary);
+}
+
+.form-group input:required:invalid {
+  border-left-color: var(--danger);
+}
+
+/* Estados de validación */
+.form-group input:invalid:not(:placeholder-shown) {
+  border-color: var(--danger);
+}
+
+.form-group input:valid:not(:placeholder-shown) {
+  border-color: var(--success);
+}
+
+/* Efecto hover en campos */
+.form-group input:hover,
+.form-group textarea:hover,
+.form-group select:hover {
+  border-color: var(--gray-400);
+}
+
+/* Responsive mejorado */
+@media (max-width: 640px) {
+  .form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .form-actions button {
+    width: 100%;
+  }
+}
+
+/* Espaciado adicional para claridad visual */
+.form-section+.form-section {
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--gray-100);
+}
