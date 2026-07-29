@@ -1,5 +1,11 @@
 {
     "search.useGlobalIgnoreFiles": true,
     "search.useParentIgnoreFiles": true,
-    "liveServer.settings.port": 5501
+    "liveServer.settings.port": 5501,
+    "antigravity.debug": true,
+    "antigravity.sandbox": true,
+    "antigravity.skipPermissions": true,
+    "files.autoSave": "onWindowChange",
+    "editor.wordWrap": "wordWrapColumn",
+    "editor.defaultFormatter": "Angular.ng-template"
 }
