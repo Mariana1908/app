@@ -71,6 +71,11 @@
   flex-direction: column;
 }
 
+/* Oculta el mensaje temporal que estaba debajo del selector de fecha. */
+.form-group-half h2[style="color:red"] {
+  display: none;
+}
+
 .label-title {
   color: #8B4513;
   font-weight: bold;

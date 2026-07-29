@@ -5,7 +5,7 @@ import { RouterOutlet } from '@angular/router';
 @Component({
   selector: 'app-root',
   imports: [FormsModule, RouterOutlet],
-  templateUrl: './app.html',zz
+  templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App {
