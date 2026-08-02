@@ -3,10 +3,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
-
 @Component({
   selector: 'app-agendar',
-  standalone: true,
+  //standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './agendar.component.html',
   styleUrls: ['./agendar.component.css']
@@ -32,7 +31,6 @@ export class AgendarComponent implements OnInit {
   ];
 
   estilistas = [
-    { id: 0, nombre: '-- ¿Quién va a atender? --' },
     { id: 1, nombre: 'María' },
     { id: 2, nombre: 'Carmen' },
     { id: 3, nombre: 'Sandra' }

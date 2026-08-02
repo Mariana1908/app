@@ -9,42 +9,138 @@
 <style>*{margin:0;padding:0;box-sizing:border-box}:root{--primary:#8b5cf6;--primary-dark:#7c3aed;--primary-light:#a78bfa;--secondary:#ec4899;--secondary-dark:#db2777;--success:#10b981;--success-dark:#059669;--danger:#ef4444;--danger-dark:#dc2626;--warning:#f59e0b;--warning-dark:#d97706;--info:#3b82f6;--info-dark:#2563eb;--gray-50:#f9fafb;--gray-100:#f3f4f6;--gray-200:#e5e7eb;--gray-300:#d1d5db;--gray-400:#9ca3af;--gray-500:#6b7280;--gray-600:#4b5563;--gray-700:#374151;--gray-800:#1f2937;--gray-900:#111827;--shadow-sm:0 1px 2px 0 rgba(0, 0, 0, .05);--shadow-md:0 2px 4px -1px rgba(0, 0, 0, .1);--shadow-lg:0 4px 6px -1px rgba(0, 0, 0, .1);--shadow-xl:0 8px 12px -2px rgba(0, 0, 0, .1);--radius-sm:4px;--radius-md:6px;--radius-lg:8px;--radius-xl:12px;--space-xs:.25rem;--space-sm:.5rem;--space-md:.75rem;--space-lg:1rem;--space-xl:1.25rem;--space-2xl:1.5rem}body{font-family:Inter,Segoe UI,Tahoma,Geneva,Verdana,sans-serif;background-color:var(--gray-50);color:var(--gray-900);line-height:1.5;font-size:14px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}</style><link rel="stylesheet" href="styles-Y3I6IKSW.css" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="styles-Y3I6IKSW.css"></noscript></head>
 <body>
   <app-root></app-root>
-<script src="polyfills-FFHMD2TL.js" type="module"></script><script src="main-GR5BUBRG.js" type="module"></script>
-<script>
-  (() => {
-    const addReportsCard = () => {
-      const grid = document.querySelector('.button-grid');
-      if (!grid || document.querySelector('.card-reportes')) {
-        return Boolean(grid);
+  <script>
+    (function () {
+      function createFallbackText(text, className) {
+        var el = document.createElement('p');
+        el.textContent = text;
+        if (className) el.className = className;
+        return el;
       }
 
-      const card = document.createElement('button');
-      card.type = 'button';
-      card.className = 'dash-card card-reportes';
-      card.setAttribute('aria-label', 'Ver reportes');
-      card.innerHTML = `
-        <div class="card-icon"><i class="fas fa-chart-bar"></i></div>
-        <div class="card-info">
-          <h3>Reportes</h3>
-          <p>Consulta indicadores y el resumen de tu negocio.</p>
-        </div>
-        <i class="fas fa-chevron-right arrow"></i>`;
-      grid.appendChild(card);
-      return true;
-    };
+      function insertFallback() {
+        try {
+          var root = document.querySelector('app-root');
+          if (!root) return;
+          var existing = document.getElementById('fallback-ui');
+          if (existing) return;
+          if (root.children.length > 0 || root.innerHTML.trim().length > 0) return;
 
-    const style = document.createElement('style');
-    style.textContent = `
-      .card-reportes .card-icon { background: #fff3e0; color: #f57c00; }
-      .card-reportes:hover .arrow { color: #f57c00; }
-    `;
-    document.head.appendChild(style);
+          var fallback = document.createElement('div');
+          fallback.id = 'fallback-ui';
+          fallback.style.maxWidth = '960px';
+          fallback.style.margin = '24px auto';
+          fallback.style.padding = '0 16px';
 
-    const observer = new MutationObserver(() => {
-      if (addReportsCard()) observer.disconnect();
-    });
-    observer.observe(document.documentElement, { childList: true, subtree: true });
-    addReportsCard();
-  })();
-</script></body>
+          var header = document.createElement('div');
+          header.style.marginBottom = '16px';
+          var title = document.createElement('h1');
+          title.textContent = 'Acceso rápido';
+          title.style.margin = '0 0 8px 0';
+          title.style.fontSize = '1.5rem';
+          title.style.color = '#1f2937';
+          header.appendChild(title);
+          header.appendChild(createFallbackText('Si la aplicación no se carga, usa estos controles temporales para ver la lista desplegable y el panel de reportes.', '')); 
+          fallback.appendChild(header);
+
+          var serviciosCard = document.createElement('div');
+          serviciosCard.className = 'card';
+          serviciosCard.style.marginBottom = '16px';
+
+          var servicioTitle = document.createElement('h2');
+          servicioTitle.textContent = 'Servicios';
+          servicioTitle.style.marginTop = '0';
+          servicioTitle.style.fontSize = '1.125rem';
+          servicioTitle.style.color = '#111827';
+          serviciosCard.appendChild(servicioTitle);
+
+          var formGroup = document.createElement('div');
+          formGroup.className = 'form-group';
+          var label = document.createElement('label');
+          label.textContent = 'Selecciona el servicio:';
+          label.style.display = 'block';
+          label.style.marginBottom = '0.5rem';
+          formGroup.appendChild(label);
+
+          var select = document.createElement('select');
+          select.id = 'fallback-servicio-select';
+          select.className = 'form-control';
+          select.style.width = '100%';
+          select.style.padding = '0.75rem 1rem';
+          select.style.borderRadius = '8px';
+          select.style.border = '1px solid #d1d5db';
+          select.style.fontSize = '1rem';
+          select.style.backgroundColor = '#ffffff';
+          var opciones = ['', 'Corte de cabello', 'Coloración', 'Peinado', 'Manicura', 'Pedicura', 'Facial', 'Masaje', 'Depilación'];
+          opciones.forEach(function (opt, index) {
+            var option = document.createElement('option');
+            option.value = opt;
+            option.textContent = index === 0 ? '-- Selecciona un servicio --' : opt;
+            select.appendChild(option);
+          });
+          formGroup.appendChild(select);
+
+          var selectedText = document.createElement('p');
+          selectedText.id = 'fallback-servicio-selected';
+          selectedText.style.marginTop = '0.75rem';
+          selectedText.style.color = '#4b5563';
+          selectedText.textContent = 'Servicio seleccionado: ninguno';
+          formGroup.appendChild(selectedText);
+
+          select.addEventListener('change', function () {
+            selectedText.textContent = 'Servicio seleccionado: ' + (select.value || 'ninguno');
+          });
+          serviciosCard.appendChild(formGroup);
+          fallback.appendChild(serviciosCard);
+
+          var reportCard = document.createElement('div');
+          reportCard.className = 'card';
+          var reportTitle = document.createElement('h2');
+          reportTitle.textContent = 'Panel de reportes';
+          reportTitle.style.marginTop = '0';
+          reportTitle.style.fontSize = '1.125rem';
+          reportTitle.style.color = '#111827';
+          reportCard.appendChild(reportTitle);
+
+          var reportList = document.createElement('div');
+          reportList.style.display = 'grid';
+          reportList.style.gap = '12px';
+
+          ['Ventas', 'Citas', 'Clientes'].forEach(function (item) {
+            var reportItem = document.createElement('div');
+            reportItem.style.padding = '12px 14px';
+            reportItem.style.borderRadius = '12px';
+            reportItem.style.backgroundColor = '#f9fafb';
+            reportItem.style.border = '1px solid #e5e7eb';
+            reportItem.textContent = item + ': contenido de reporte';
+            reportList.appendChild(reportItem);
+          });
+
+          reportCard.appendChild(reportList);
+          fallback.appendChild(reportCard);
+
+          root.parentNode.insertBefore(fallback, root.nextSibling);
+
+          var observer = new MutationObserver(function () {
+            if (root.children.length > 0 || root.innerHTML.trim().length > 0) {
+              var existingFallback = document.getElementById('fallback-ui');
+              if (existingFallback) existingFallback.remove();
+              observer.disconnect();
+            }
+          });
+          observer.observe(root, { childList: true, subtree: true });
+        } catch (e) {
+          console.warn('Fallback UI injection failed', e);
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', function () {
+        setTimeout(insertFallback, 250);
+      });
+      window.addEventListener('load', function () {
+        setTimeout(insertFallback, 250);
+      });
+    })();
+  </script>
+<script src="polyfills-FFHMD2TL.js" type="module"></script><script src="main-GR5BUBRG.js" type="module"></script></body>
 </html>

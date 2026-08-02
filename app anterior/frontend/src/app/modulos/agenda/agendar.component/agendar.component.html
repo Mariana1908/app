@@ -11,6 +11,7 @@
       <input 
         type="text" 
         [(ngModel)]="clienteSearch"
+        name="clienteSearch"
         class="input-field"
         placeholder="Escribe nombre o teléfono..."
       />
@@ -19,7 +20,7 @@
     <!-- ESTILISTA -->
     <div class="form-group">
       <label class="label-title">ESTILISTA:</label>
-      <select [(ngModel)]="estilista" class="select-field">
+      <select [(ngModel)]="estilista" name="estilista" class="select-field">
         <option value="">-- ¿Quién va a atender? --</option>
         <option *ngFor="let est of estilistas" [value]="est.nombre">
           {{ est.nombre }}
@@ -27,28 +28,26 @@
       </select>
     </div>
 
-    <!-- FECHA Y SERVICIO (lado a lado) -->
-    <div class="form-group-row">
-      <div class="form-group-half">
-        <label class="label-title">FECHA:</label>
-        <input 
-          type="date"
-          [(ngModel)]="fecha"
-          class="input-field"
-        />
+    <!-- SERVICIO -->
+    <div class="form-group">
+      <label class="label-title">SERVICIO:</label>
+      <select [(ngModel)]="servicio" name="servicio" class="select-field">
+        <option value="">-- Selecciona un servicio --</option>
+        <option *ngFor="let srv of servicios" [value]="srv.nombre">
+          {{ srv.nombre }}
+        </option>
+      </select>
+    </div>
 
-        <h2 style="color:red">AQUÍ DEBERÍA APARECER EL SERVICIO</h2>
-      </div>
-
-      <div class="form-group-half">
-        <label class="label-title">SERVICIO:</label>
-        <select [(ngModel)]="servicio" class="select-field">
-          <option value="">-- Selecciona un servicio --</option>
-          <option *ngFor="let srv of servicios" [value]="srv.nombre">
-            {{ srv.nombre }}
-          </option>
-        </select>
-      </div>
+    <!-- FECHA -->
+    <div class="form-group">
+      <label class="label-title">FECHA:</label>
+      <input 
+        type="date"
+        [(ngModel)]="fecha"
+        name="fecha"
+        class="input-field"
+      />
     </div>
 
     <!-- HORAS -->
@@ -58,6 +57,7 @@
         <input 
           type="time"
           [(ngModel)]="horaInicio"
+          name="horaInicio"
           class="input-field"
         />
       </div>
@@ -67,6 +67,7 @@
         <input 
           type="time"
           [(ngModel)]="horaFin"
+          name="horaFin"
           class="input-field"
         />
       </div>
@@ -77,6 +78,7 @@
       <label class="label-title">NOTAS / INSTRUCCIONES:</label>
       <textarea 
         [(ngModel)]="notas"
+        name="notas"
         class="textarea-field"
         placeholder="Escribe notas adicionales..."
       ></textarea>
