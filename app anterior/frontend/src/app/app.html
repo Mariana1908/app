@@ -1,19 +1,44 @@
 <main class="container my-4">
-  <div class="p-3 border rounded mb-4">
-    
-    <!-- Título y selector directo -->
-    <h3>Servicios</h3>
-    
-    <select id="servicios" class="form-select" [(ngModel)]="servicioSeleccionado">
-      @for (servicio of servicios; track servicio) {
-        <option [value]="servicio">{{ servicio }}</option>
-      }
-    </select>
 
-    <p class="mt-2">
-      Servicio seleccionado: <strong>{{ servicioSeleccionado }}</strong>
-    </p>
-    
+  <!-- Panel de Control Principal (Fijo) -->
+  <div class="p-4 border rounded bg-light mb-4 shadow-sm">
+    <h2 class="h4 mb-1">Panel de Control</h2>
+    <p class="text-muted mb-4">¿Qué vamos a hacer hoy, Administrador?</p>
+
+    <div class="row g-3">
+      <!-- Tarjeta 1: Clientes -->
+      <div class="col-md-4">
+        <div class="card h-100 shadow-sm custom-card" [routerLink]="['/clientes']" style="cursor: pointer;">
+          <div class="card-body">
+            <h5 class="card-title text-primary">Gestión de Clientes</h5>
+            <p class="card-text text-secondary">Registra y consulta tus clientes.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tarjeta 2: Agenda -->
+      <div class="col-md-4">
+        <div class="card h-100 shadow-sm custom-card" [routerLink]="['/agenda/nuevo']" style="cursor: pointer;">
+          <div class="card-body">
+            <h5 class="card-title text-primary">Agenda de Citas</h5>
+            <p class="card-text text-secondary">Consulta y organiza tus citas.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tarjeta 3: Reportes -->
+      <div class="col-md-4">
+        <div class="card h-100 shadow-sm custom-card" [routerLink]="['/reportes']" style="cursor: pointer;">
+          <div class="card-body">
+            <h5 class="card-title text-primary">Reportes y Estadísticas</h5>
+            <p class="card-text text-secondary">Consulta métricas e ingresos.</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <!-- El resto del código de la card de reportes y router-outlet se queda igual abajo -->
+  <!-- Salida dinámica de las vistas de Angular -->
+  <router-outlet></router-outlet>
+
+</main>
