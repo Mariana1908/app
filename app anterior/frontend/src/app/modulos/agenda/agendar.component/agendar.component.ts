@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ServicioService, Servicio } from '../../servicios/servicio.service';
-// Ajusta la ruta relativa si varía
+
+// Subimos 3 niveles: agendar.component/ -> agenda/ -> modulos/ -> app/ -> servicios/
+import { ServicioService, Servicio } from '../../../servicios/servicio.service';
 
 @Component({
   selector: 'app-agendar',
@@ -15,7 +16,7 @@ export class AgendarComponent implements OnInit {
   listaServicios: Servicio[] = [];
   servicioSeleccionado: number | null = null;
 
- constructor(private serviciosService: ServicioService) {}
+  constructor(private serviciosService: ServicioService) {}
 
   ngOnInit(): void {
     this.cargarServicios();
