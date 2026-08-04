@@ -18,6 +18,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/clientes', require('./routes/clienteRoutes'));
 app.use('/api/estado', require('./routes/estadoRoutes'));
 app.use('/api/visitas', require('./routes/visitaRoutes'));
+app.use('/api/servicios', require('./routes/servicioRoutes')); // <-- AGREGAR ESTA LÍNEA
 
 // Ruta de prueba
 app.get('/', (req, res) => {

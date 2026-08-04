@@ -1,10 +1,10 @@
-const db = require('../config/database'); // Importa promisePool desde database.js
+// backend/controllers/servicioController.js
+const db = require('../config/database');
 
-// GET: Obtener todos los servicios registrados usando async/await
 exports.obtenerServicios = async (req, res) => {
   try {
-    // Al usar mysql2 con promise, db.query devuelve un arreglo: [filas, campos]
-    const [rows] = await db.query('SELECT * FROM servicios');
+    // Solo trae los servicios que estén activos
+    const [rows] = await db.query('SELECT id, nombre, precio, duracion_min FROM servicios WHERE activo = TRUE');
     res.json(rows);
   } catch (error) {
     console.error('❌ Error al obtener servicios:', error.message);
