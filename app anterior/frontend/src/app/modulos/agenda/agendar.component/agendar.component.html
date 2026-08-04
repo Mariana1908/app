@@ -1,94 +1,108 @@
-<div class="card shadow-sm mb-4">
-  <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center py-3">
-    <h3 class="h4 mb-0">Agendar Nueva Cita</h3>
-    <button class="btn btn-light btn-sm fw-bold" (click)="volverAlPanel()">Volver al panel de citas</button>
+<div class="container">
+  
+  <!-- ENCABEZADO -->
+  <div class="header">
+    <button type="button" class="btn-volver" (click)="volverAlPanel()">
+      Volver al panel de citas
+    </button>
+    <h1>Agendar Nueva Cita</h1>
   </div>
 
-  <div class="card-body p-4">
-    <!-- BUSCAR CLIENTE -->
-    <div class="mb-3">
-      <label class="form-label fw-bold">BUSCAR CLIENTE (NOMBRE O CELULAR):</label>
-      <input 
-        type="text" 
-        [(ngModel)]="clienteSearch"
-        name="clienteSearch"
-        class="form-control"
-        placeholder="Escribe nombre o teléfono..."
-      />
-    </div>
+  <!-- FORMULARIO -->
+  <div class="form-container">
+    <form (ngSubmit)="agendarCita()">
+      
+      <!-- BUSCAR CLIENTE -->
+      <div class="form-group">
+        <label class="label-title">BUSCAR CLIENTE (NOMBRE O CELULAR):</label>
+        <input 
+          type="text" 
+          class="input-field" 
+          placeholder="Escribe nombre o teléfono..." 
+          [(ngModel)]="clienteSearch" 
+          name="clienteSearch" 
+        />
+      </div>
 
-    <!-- ESTILISTA Y SERVICIO -->
-    <div class="row g-3 mb-3">
-      <div class="col-md-6">
-        <label class="form-label fw-bold">ESTILISTA:</label>
-        <select [(ngModel)]="estilista" name="estilista" class="form-select">
-          <option value="">-- ¿Quién va a atender? --</option>
-          @for (est of estilistas; track est.nombre) {
+      <!-- ESTILISTA -->
+      <div class="form-group">
+        <label class="label-title">ESTILISTA:</label>
+        <select class="select-field" [(ngModel)]="estilista" name="estilista">
+          <option value="" disabled selected>-- ¿Quién va a atender? --</option>
+          @for (est of estilistas; track est.id) {
             <option [value]="est.nombre">{{ est.nombre }}</option>
           }
         </select>
       </div>
 
-      <div class="col-md-6">
-        <label class="form-label fw-bold">SERVICIO:</label>
-        <select [(ngModel)]="servicio" name="servicio" class="form-select">
-          <option value="">-- Selecciona un servicio --</option>
-          @for (srv of servicios; track srv.nombre) {
-            <option [value]="srv.nombre">{{ srv.nombre }}</option>
+      <!-- SERVICIO -->
+      <div class="form-group">
+        <label class="label-title">SERVICIO:</label>
+        <select class="select-field" [(ngModel)]="servicio" name="servicio">
+          <option [value]="null" disabled selected>-- Selecciona un servicio --</option>
+          @for (srv of servicios; track srv.id) {
+            <option [value]="srv.id">{{ srv.nombre }} - ${{ srv.precio }}</option>
           }
         </select>
       </div>
-    </div>
 
-    <!-- FECHA Y HORAS -->
-    <div class="row g-3 mb-3">
-      <div class="col-md-4">
-        <label class="form-label fw-bold">FECHA:</label>
+      <!-- FECHA -->
+      <div class="form-group">
+        <label class="label-title">FECHA:</label>
         <input 
-          type="date"
-          [(ngModel)]="fecha"
-          name="fecha"
-          class="form-control"
+          type="date" 
+          class="input-field" 
+          [(ngModel)]="fecha" 
+          name="fecha" 
         />
       </div>
 
-      <div class="col-md-4">
-        <label class="form-label fw-bold">HORA DE INICIO:</label>
-        <input 
-          type="time"
-          [(ngModel)]="horaInicio"
-          name="horaInicio"
-          class="form-control"
-        />
+      <!-- HORA DE INICIO Y HORA DE FIN -->
+      <div class="form-group-row">
+        <div class="form-group-half">
+          <label class="label-title">HORA DE INICIO:</label>
+          <input 
+            type="time" 
+            class="input-field" 
+            [(ngModel)]="horaInicio" 
+            name="horaInicio" 
+          />
+        </div>
+
+        <div class="form-group-half">
+          <label class="label-title">HORA DE FIN:</label>
+          <input 
+            type="time" 
+            class="input-field" 
+            [(ngModel)]="horaFin" 
+            name="horaFin" 
+          />
+        </div>
       </div>
 
-      <div class="col-md-4">
-        <label class="form-label fw-bold">HORA DE FIN:</label>
-        <input 
-          type="time"
-          [(ngModel)]="horaFin"
-          name="horaFin"
-          class="form-control"
-        />
+      <!-- NOTAS -->
+      <div class="form-group">
+        <label class="label-title">NOTAS / INSTRUCCIONES:</label>
+        <textarea 
+          class="textarea-field" 
+          rows="3" 
+          placeholder="Escribe notas adicionales..." 
+          [(ngModel)]="notas" 
+          name="notas"
+        ></textarea>
       </div>
-    </div>
 
-    <!-- NOTAS -->
-    <div class="mb-4">
-      <label class="form-label fw-bold">NOTAS / INSTRUCCIONES:</label>
-      <textarea 
-        [(ngModel)]="notas"
-        name="notas"
-        class="form-control"
-        rows="3"
-        placeholder="Escribe notas adicionales..."
-      ></textarea>
-    </div>
+      <!-- BOTONES -->
+      <div class="button-group">
+        <button type="submit" class="btn-agendar">
+          Agendar Cita
+        </button>
+        <button type="button" class="btn-limpiar" (click)="resetForm()">
+          Limpiar Formulario
+        </button>
+      </div>
 
-    <!-- BOTONES -->
-    <div class="d-flex gap-2">
-      <button (click)="agendarCita()" class="btn btn-primary px-4">Agendar Cita</button>
-      <button (click)="resetForm()" class="btn btn-outline-secondary px-4">Limpiar Formulario</button>
-    </div>
+    </form>
   </div>
+
 </div>
