@@ -29,8 +29,9 @@ export class AgendarComponent implements OnInit {
 
   // Lista estática provisional de estilistas (o puedes traerla luego de un servicio)
   estilistas: { id: number; nombre: string }[] = [
-    { id: 1, nombre: 'Ana Gómez' },
-    { id: 2, nombre: 'Carlos López' }
+    { id: 1, nombre: 'Administrador' },
+    { id: 2, nombre: 'Jesus' },
+    { id: 3, nombre: 'Mariana' }
   ];
 
   constructor(
