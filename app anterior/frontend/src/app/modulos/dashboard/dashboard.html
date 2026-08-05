@@ -1,0 +1,46 @@
+<div class="dashboard-wrapper">
+  
+  <!-- BARRA DE NAVEGACIÓN SUPERIOR -->
+  <header class="navbar-header">
+    <div class="brand-title">Estética Leo</div>
+    <div class="user-menu">
+      <span class="user-greeting">Hola, <strong>Administrador</strong></span>
+      <button type="button" class="btn-salir" (click)="cerrarSesion()">Salir</button>
+    </div>
+  </header>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="dashboard-container">
+    
+    <!-- ENCABEZADO DE BIENVENIDA -->
+    <div class="welcome-section">
+      <h1 class="welcome-title">Panel de Control</h1>
+      <p class="welcome-subtitle">¿Qué vamos a hacer hoy, Administrador?</p>
+    </div>
+
+    <!-- TARJETAS DE OPCIONES -->
+    <div class="cards-grid">
+      
+      <!-- Tarjeta 1: Gestión de Clientes -->
+      <div class="dashboard-card" (click)="navegarA('/clientes')">
+        <div class="card-icon icon-blue"></div>
+        <div class="card-info">
+          <h2>Gestión de Clientes</h2>
+          <p>Registra y consulta tus clientes.</p>
+        </div>
+      </div>
+
+      <!-- Tarjeta 2: Agenda de Citas -->
+      <div class="dashboard-card" (click)="navegarA('/agenda')">
+        <div class="card-icon icon-green"></div>
+        <div class="card-info">
+          <h2>Agenda de Citas</h2>
+          <p>Consulta y organiza tus citas.</p>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+</div>
