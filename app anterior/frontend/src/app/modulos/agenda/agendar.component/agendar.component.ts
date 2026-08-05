@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
-// Importación manteniendo los 3 niveles de profundidad corregidos
 import { ServicioService, Servicio } from '../../../servicios/servicio.service';
 
 @Component({
@@ -15,19 +14,18 @@ import { ServicioService, Servicio } from '../../../servicios/servicio.service';
 })
 export class AgendarComponent implements OnInit {
 
-  // Propiedades requeridas por la plantilla HTML
+  // Propiedades del formulario
   clienteSearch: string = '';
   estilista: string = '';
   servicio: number | null = null;
   fecha: string = '';
   horaInicio: string = '';
   horaFin: string = '';
+  anticipo: number = 0; // <-- NUEVA PROPIEDAD
   notas: string = '';
 
-  // Arreglo para mapear la respuesta del backend
   servicios: Servicio[] = [];
 
-  // Lista estática provisional de estilistas (o puedes traerla luego de un servicio)
   estilistas: { id: number; nombre: string }[] = [
     { id: 1, nombre: 'Administrador' },
     { id: 2, nombre: 'Jesus' },
@@ -43,7 +41,6 @@ export class AgendarComponent implements OnInit {
     this.cargarServicios();
   }
 
-  // Consulta los servicios desde la API Express/MySQL
   cargarServicios(): void {
     this.serviciosService.getServicios().subscribe({
       next: (data) => {
@@ -53,12 +50,10 @@ export class AgendarComponent implements OnInit {
     });
   }
 
-  // Navega de regreso al panel general
   volverAlPanel(): void {
-    this.router.navigate(['/agenda']);
+    this.router.navigate(['/dashboard']);
   }
 
-  // Envía el formulario de la cita
   agendarCita(): void {
     const nuevaCita = {
       cliente: this.clienteSearch,
@@ -67,15 +62,16 @@ export class AgendarComponent implements OnInit {
       fecha: this.fecha,
       horaInicio: this.horaInicio,
       horaFin: this.horaFin,
+      anticipo: this.anticipo, // <-- INCLUIDO EN EL OBJETO DE LA CITA
       notas: this.notas
     };
 
     console.log('Cita registrada:', nuevaCita);
     alert('¡Cita agendada con éxito!');
     this.resetForm();
+    this.volverAlPanel();
   }
 
-  // Restablece los campos del formulario
   resetForm(): void {
     this.clienteSearch = '';
     this.estilista = '';
@@ -83,6 +79,7 @@ export class AgendarComponent implements OnInit {
     this.fecha = '';
     this.horaInicio = '';
     this.horaFin = '';
+    this.anticipo = 0; // <-- RESETEAR A 0
     this.notas = '';
   }
 }

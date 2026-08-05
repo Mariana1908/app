@@ -18,24 +18,39 @@
       <p class="welcome-subtitle">¿Qué vamos a hacer hoy, Administrador?</p>
     </div>
 
-    <!-- TARJETAS DE OPCIONES -->
-    <div class="cards-grid">
+    <!-- TARJETAS DE OPCIONES EN GRID -->
+    <div class="row g-4">
       
-      <!-- Tarjeta 1: Gestión de Clientes -->
-      <div class="dashboard-card" (click)="navegarA('/clientes')">
-        <div class="card-icon icon-blue"></div>
-        <div class="card-info">
-          <h2>Gestión de Clientes</h2>
-          <p>Registra y consulta tus clientes.</p>
+      <!-- Tarjeta 1: Clientes -->
+      <div class="col-md-4">
+        <div class="dashboard-card" [routerLink]="['/clientes']">
+          <div class="card-icon icon-blue"></div>
+          <div class="card-info">
+            <h2>Gestión de Clientes</h2>
+            <p>Registra y consulta tus clientes.</p>
+          </div>
         </div>
       </div>
 
-      <!-- Tarjeta 2: Agenda de Citas -->
-      <div class="dashboard-card" (click)="navegarA('/agenda')">
-        <div class="card-icon icon-green"></div>
-        <div class="card-info">
-          <h2>Agenda de Citas</h2>
-          <p>Consulta y organiza tus citas.</p>
+      <!-- Tarjeta 2: Agenda -->
+      <div class="col-md-4">
+        <div class="dashboard-card" [routerLink]="['/agenda/nuevo']">
+          <div class="card-icon icon-green"></div>
+          <div class="card-info">
+            <h2>Agenda de Citas</h2>
+            <p>Consulta y organiza tus citas.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tarjeta 3: Reportes -->
+      <div class="col-md-4">
+        <div class="dashboard-card" [routerLink]="['/reportes']">
+          <div class="card-icon icon-purple"></div>
+          <div class="card-info">
+            <h2>Reportes y Estadísticas</h2>
+            <p>Consulta métricas e ingresos.</p>
+          </div>
         </div>
       </div>
 
