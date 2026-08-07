@@ -1,21 +1,35 @@
 <div class="reportes-container">
-  <div class="header">
-    <h1>Reportes y Estadísticas</h1>
-    <p>Resumen general del negocio</p>
+  
+  <!-- BANNER DE ENCABEZADO CON BOTÓN Y TÍTULO -->
+  <div class="header-banner">
+    <div class="header-left">
+      <button type="button" class="btn-menu-principal" (click)="volverAlPanel()">
+        Menú principal
+      </button>
+      <h1 class="header-title">Reportes y Estadísticas</h1>
+    </div>
   </div>
 
-  <div class="kpi-grid">
-    <div class="kpi-card">
-      <h3>Citas del Mes</h3>
-      <p class="kpi-value">0</p>
-    </div>
-    <div class="kpi-card">
-      <h3>Ingresos Estimados</h3>
-      <p class="kpi-value">$0.00</p>
-    </div>
-    <div class="kpi-card">
-      <h3>Clientes Nuevos</h3>
-      <p class="kpi-value">0</p>
+  <!-- CONTENIDO PRINCIPAL DE REPORTES -->
+  <div class="reportes-body">
+    <p class="subtitle">Resumen general del negocio</p>
+
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <h3>Citas del Mes</h3>
+        <p class="kpi-value">0</p>
+      </div>
+
+      <div class="kpi-card">
+        <h3>Ingresos Estimados</h3>
+        <p class="kpi-value">$0.00</p>
+      </div>
+
+      <div class="kpi-card">
+        <h3>Clientes Nuevos</h3>
+        <p class="kpi-value">0</p>
+      </div>
     </div>
   </div>
+
 </div>

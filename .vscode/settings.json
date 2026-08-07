@@ -6,6 +6,6 @@
     "antigravity.sandbox": true,
     "antigravity.skipPermissions": true,
     "files.autoSave": "afterDelay",
-    "editor.wordWrap": "wordWrapColumn",
+    "editor.wordWrap": "on",
     "editor.defaultFormatter": "Angular.ng-template"
 }

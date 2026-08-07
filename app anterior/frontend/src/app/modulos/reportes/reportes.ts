@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-reportes',
@@ -7,5 +8,11 @@ import { Component } from '@angular/core';
   styleUrl: './reportes.css'
 })
 export class ReportesComponent {
-  // Asegúrate de que tenga la palabra 'export' antes de 'class'
+
+  constructor(private router: Router) {}
+
+  volverAlPanel(): void {
+    this.router.navigate(['/dashboard']);
+  }
+
 }
