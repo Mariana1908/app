@@ -1,145 +1,172 @@
-<div class="container">
-  <div class="form-header">
-    <h1>{{ esEdicion ? '✏️ Editar Cliente' : '➕ Nuevo Cliente' }}</h1>
-    <p>{{ esEdicion ? 'Actualiza la información del cliente' : 'Completa los datos para registrar un nuevo cliente' }}</p>
+<div class="form-cliente-container">
+
+  <!-- BANNER DE ENCABEZADO -->
+  <div class="header-banner">
+    <div class="header-left">
+      <button type="button" class="btn-primary-custom" (click)="cancelar()">
+        Menú principal
+      </button>
+      <h1 class="header-title">{{ esEdicion ? 'Editar Cliente' : 'Nuevo Cliente' }}</h1>
+    </div>
   </div>
 
-  <div class="error" *ngIf="error">
-    ⚠️ {{ error }}
+  <!-- TARJETA DEL FORMULARIO -->
+  <div class="card-box">
+    
+    <div class="error-banner" *ngIf="error">
+      ⚠️ {{ error }}
+    </div>
+
+    <form (ngSubmit)="guardar()" class="form-body">
+      
+      <!-- SECCIÓN: INFORMACIÓN BÁSICA -->
+      <div class="form-section">
+        <h2 class="form-section-title">📋 Información Básica</h2>
+        
+        <div class="form-group full-width">
+          <label for="nombre">Nombre Completo <span class="required">*</span></label>
+          <input
+            type="text"
+            id="nombre"
+            class="input-field"
+            [(ngModel)]="cliente.nombre"
+            name="nombre"
+            placeholder="Ej: María García López"
+            required
+          />
+          <span class="form-help">Nombre completo del cliente</span>
+        </div>
+
+        <div class="form-grid-3">
+          <div class="form-group">
+            <label for="tel">Teléfono <span class="required">*</span></label>
+            <input
+              type="tel"
+              id="tel"
+              class="input-field"
+              [(ngModel)]="cliente.tel"
+              name="tel"
+              placeholder="3312345678"
+              required
+            />
+            <span class="form-help">A 10 dígitos</span>
+          </div>
+
+          <div class="form-group">
+            <label for="fecha_nac">Fecha de Nacimiento</label>
+            <input
+              type="date"
+              id="fecha_nac"
+              class="input-field"
+              [(ngModel)]="cliente.fecha_nac"
+              name="fecha_nac"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="genero">Género</label>
+            <select
+              id="genero"
+              class="input-field select-field"
+              [(ngModel)]="cliente.genero"
+              name="genero"
+            >
+              <option value="">Selecciona un género</option>
+              <option value="femenino">Femenino</option>
+              <option value="masculino">Masculino</option>
+              <option value="otro">Otro</option>
+            </select>
+            <span class="form-help">Opcional</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECCIÓN: DIRECCIÓN -->
+      <div class="form-section">
+        <h2 class="form-section-title">📍 Dirección</h2>
+        
+        <div class="form-group full-width">
+          <label for="domicilio">Domicilio Completo</label>
+          <input
+            type="text"
+            id="domicilio"
+            class="input-field"
+            [(ngModel)]="cliente.domicilio"
+            name="domicilio"
+            placeholder="Calle, número, colonia"
+          />
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label for="ciudad">Ciudad</label>
+            <input
+              type="text"
+              id="ciudad"
+              class="input-field"
+              [(ngModel)]="cliente.ciudad"
+              name="ciudad"
+              placeholder="Guadalajara"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="cp">Código Postal</label>
+            <input
+              type="text"
+              id="cp"
+              class="input-field"
+              [(ngModel)]="cliente.cp"
+              name="cp"
+              placeholder="44100"
+              maxlength="5"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- SECCIÓN: REDES SOCIALES -->
+      <div class="form-section">
+        <h2 class="form-section-title">🌐 Redes Sociales</h2>
+        
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label for="instagram">Instagram</label>
+            <input
+              type="text"
+              id="instagram"
+              class="input-field"
+              [(ngModel)]="cliente.instagram"
+              name="instagram"
+              placeholder="@usuario"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="facebook">Facebook</label>
+            <input
+              type="text"
+              id="facebook"
+              class="input-field"
+              [(ngModel)]="cliente.facebook"
+              name="facebook"
+              placeholder="Usuario de Facebook"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- ACCIONES DEL FORMULARIO -->
+      <div class="form-actions">
+        <button type="button" class="btn-secundario" (click)="cancelar()">
+          Cancelar
+        </button>
+        <button type="submit" class="btn-primary-custom" [disabled]="guardando">
+          {{ guardando ? 'Guardando...' : 'Guardar' }}
+        </button>
+      </div>
+
+    </form>
   </div>
 
-  <form (ngSubmit)="guardar()" class="form-container">
-    <!-- Sección: Información Básica -->
-    <div class="form-section">
-      <h2 class="form-section-title">📋 Información Básica</h2>
-      
-      <div class="form-group">
-        <label for="nombre">
-          Nombre Completo <span class="required">*</span>
-        </label>
-        <input
-          type="text"
-          id="nombre"
-          [(ngModel)]="cliente.nombre"
-          name="nombre"
-          placeholder="Ej: María García López"
-          required>
-        <span class="form-help">Nombre completo del cliente</span>
-      </div>
-
-      <div class="form-row form-row-3">
-        <div class="form-group">
-          <label for="tel">
-            Teléfono <span class="required">*</span>
-          </label>
-          <input
-            type="tel"
-            id="tel"
-            [(ngModel)]="cliente.tel"
-            name="tel"
-            placeholder="3312345678"
-            required>
-          <span class="form-help">A 10 dígitos</span>
-        </div>
-
-        <div class="form-group">
-          <label for="fecha_nac">Fecha de Nacimiento</label>
-          <input
-            type="date"
-            id="fecha_nac"
-            [(ngModel)]="cliente.fecha_nac"
-            name="fecha_nac">
-        </div>
-
-        <div class="form-group">
-          <label for="genero">Género</label>
-          <select
-            id="genero"
-            [(ngModel)]="cliente.genero"
-            name="genero">
-            <option value="">Selecciona un género</option>
-            <option value="femenino">Femenino</option>
-            <option value="masculino">Masculino</option>
-            <option value="otro">Otro</option>
-          </select>
-          <span class="form-help">Opcional</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Sección: Dirección -->
-    <div class="form-section">
-      <h2 class="form-section-title">📍 Dirección</h2>
-      
-      <div class="form-group">
-        <label for="domicilio">Domicilio Completo</label>
-        <input
-          type="text"
-          id="domicilio"
-          [(ngModel)]="cliente.domicilio"
-          name="domicilio"
-          placeholder="Calle, número, colonia">
-      </div>
-
-      <div class="form-row form-row-2">
-        <div class="form-group">
-          <label for="ciudad">Ciudad</label>
-          <input
-            type="text"
-            id="ciudad"
-            [(ngModel)]="cliente.ciudad"
-            name="ciudad"
-            placeholder="Guadalajara">
-        </div>
-
-        <div class="form-group">
-          <label for="cp">Código Postal</label>
-          <input
-            type="text"
-            id="cp"
-            [(ngModel)]="cliente.cp"
-            name="cp"
-            placeholder="44100"
-            maxlength="5">
-        </div>
-      </div>
-    </div>
-
-    <!-- Sección: Redes Sociales -->
-    <div class="form-section">
-      <h2 class="form-section-title">🌐 Redes Sociales</h2>
-      
-      <div class="form-row form-row-2">
-        <div class="form-group">
-          <label for="instagram">Instagram</label>
-          <input
-            type="text"
-            id="instagram"
-            [(ngModel)]="cliente.instagram"
-            name="instagram"
-            placeholder="@usuario">
-        </div>
-
-        <div class="form-group">
-          <label for="facebook">Facebook</label>
-          <input
-            type="text"
-            id="facebook"
-            [(ngModel)]="cliente.facebook"
-            name="facebook"
-            placeholder="Usuario de Facebook">
-        </div>
-      </div>
-    </div>
-
-    <!-- Acciones -->
-    <div class="form-actions">
-      <button type="button" class="btn-cancelar" (click)="cancelar()">
-        ✕ Cancelar
-      </button>
-      <button type="submit" class="btn-guardar" [disabled]="guardando">
-        {{ guardando ? '⏳ Guardando...' : '✓ Guardar' }}
-      </button>
-    </div>
-  </form>
 </div>

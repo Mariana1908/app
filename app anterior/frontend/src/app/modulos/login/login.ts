@@ -1,26 +1,26 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms'; // 👈 Importante para habilitar [(ngModel)]
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule], // 👈 Asegúrate de agregarlo aquí
   templateUrl: './login.html',
   styleUrl: './login.css'
 })
-export class Login {
+export class LoginComponent {
   usuario: string = '';
   password: string = '';
 
   constructor(private router: Router) {}
 
   iniciarSesion(): void {
-    if (this.usuario.trim() !== '' && this.password.trim() !== '') {
-      this.router.navigate(['/dashboard']);
-    } else {
-      alert('Por favor, ingresa tu usuario y contraseña.');
+    // Aquí puedes meter tu validación de credenciales
+    if (this.usuario && this.password) {
+      // Redirige al panel principal
+      this.router.navigate(['/app/dashboard']);
     }
   }
 }

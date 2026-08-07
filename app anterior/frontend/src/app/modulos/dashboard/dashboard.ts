@@ -17,6 +17,6 @@ export class DashboardComponent {
   }
 
   cerrarSesion(): void {
-    this.router.navigate(['/login']);
+    this.router.navigate(['/app/login']); // 👈 Actualizado con /app/
   }
 }

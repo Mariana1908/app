@@ -21,7 +21,7 @@ export class AgendarComponent implements OnInit {
   fecha: string = '';
   horaInicio: string = '';
   horaFin: string = '';
-  anticipo: number = 0; // <-- NUEVA PROPIEDAD
+  anticipo: number = 0;
   notas: string = '';
 
   servicios: Servicio[] = [];
@@ -54,6 +54,10 @@ export class AgendarComponent implements OnInit {
     this.router.navigate(['/dashboard']);
   }
 
+  cancelar(): void {
+    this.router.navigate(['/agenda']);
+  }
+
   agendarCita(): void {
     const nuevaCita = {
       cliente: this.clienteSearch,
@@ -62,14 +66,14 @@ export class AgendarComponent implements OnInit {
       fecha: this.fecha,
       horaInicio: this.horaInicio,
       horaFin: this.horaFin,
-      anticipo: this.anticipo, // <-- INCLUIDO EN EL OBJETO DE LA CITA
+      anticipo: this.anticipo,
       notas: this.notas
     };
 
     console.log('Cita registrada:', nuevaCita);
     alert('¡Cita agendada con éxito!');
     this.resetForm();
-    this.volverAlPanel();
+    this.router.navigate(['/agenda']); // Redirige a la lista de agenda
   }
 
   resetForm(): void {
@@ -79,7 +83,7 @@ export class AgendarComponent implements OnInit {
     this.fecha = '';
     this.horaInicio = '';
     this.horaFin = '';
-    this.anticipo = 0; // <-- RESETEAR A 0
+    this.anticipo = 0;
     this.notas = '';
   }
 }
