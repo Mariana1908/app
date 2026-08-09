@@ -1,19 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common'; // <-- Importa Location
 import { FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ClienteService } from '../../../servicios/cliente.service';
 import { Cliente } from '../../../interfaces/cliente.model';
 
-
 @Component({
-  selector: 'app-form-cliente.component',
+  selector: 'app-form-cliente',
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './form-cliente.component.html',
   styleUrl: './form-cliente.component.css',
 })
-export class FormClienteComponent implements OnInit{
+export class FormClienteComponent implements OnInit {
   cliente: Cliente = {
     nombre: '',
     tel: '',
@@ -29,7 +28,8 @@ export class FormClienteComponent implements OnInit{
   constructor(
     private clienteService: ClienteService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private location: Location // <-- Inyecta el servicio Location
   ) { }
 
   ngOnInit() {
@@ -67,9 +67,9 @@ export class FormClienteComponent implements OnInit{
       : this.clienteService.crearCliente(this.cliente);
 
     operacion.subscribe({
-      next: (response) => {
+      next: () => {
         alert(this.esEdicion ? 'Cliente actualizado' : 'Cliente creado');
-        this.router.navigate(['/clientes']);
+        this.location.back(); // Regresa al origen tras guardar
       },
       error: (err) => {
         this.error = err.error?.error || 'Error al guardar cliente';
@@ -79,6 +79,6 @@ export class FormClienteComponent implements OnInit{
   }
 
   cancelar() {
-    this.router.navigate(['/clientes']);
+    this.location.back(); // Regresa exacto a la pantalla anterior (Agenda o Clientes)
   }
 }

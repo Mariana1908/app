@@ -24,7 +24,7 @@
 }
 
 .btn-volver {
-  background-color: #724d38;
+  background-color: #693a20;
   color: white;
   border: none;
   padding: 10px 22px;
@@ -32,11 +32,11 @@
   cursor: pointer;
   font-weight: bold;
   font-size: 14px;
-  transition: background-color 0.3s;
+  transition: background-color 0.25s ease;
 }
 
 .btn-volver:hover {
-  background-color: #583a29;
+  background-color: #cb9d7c;
 }
 
 /* CONTENEDOR DEL FORMULARIO */
@@ -66,7 +66,7 @@
 }
 
 .label-title {
-  color: #724d38;
+  color: #693a20;
   font-weight: bold;
   font-size: 13px;
   margin-bottom: 8px;
@@ -82,7 +82,7 @@
   border: 1px solid #e8e2dc;
   border-radius: 8px;
   font-size: 14px;
-  background-color: #f9f7f5;
+  background-color: #ffffff;
   color: #333;
   box-sizing: border-box;
   font-family: Arial, sans-serif;
@@ -93,9 +93,8 @@
 .select-field:focus,
 .textarea-field:focus {
   outline: none;
-  border-color: #724d38;
-  background-color: #ffffff;
-  box-shadow: 0 0 5px rgba(114, 77, 56, 0.2);
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 1px #3b82f6;
 }
 
 .textarea-field {
@@ -103,41 +102,32 @@
   min-height: 90px;
 }
 
-/* BOTONES DE ACCIÓN */
+/* BOTÓN DE ACCIÓN ÚNICO */
 .button-group {
   display: flex;
-  gap: 15px;
   margin-top: 30px;
-}
-
-.btn-agendar,
-.btn-limpiar {
-  padding: 12px 30px;
-  border: none;
-  border-radius: 8px;
-  font-size: 15px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s;
+  width: 100%;
 }
 
 .btn-agendar {
-  background-color: #8b5cf6;
+  width: 100%;
+  padding: 14px 20px;
+  background-color: #693a20;
   color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.25s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 .btn-agendar:hover {
-  background-color: #7c3aed;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-}
-
-.btn-limpiar {
-  background-color: #e5e7eb;
-  color: #374151;
-}
-
-.btn-limpiar:hover {
-  background-color: #d1d5db;
+  background-color: #cb9d7c;
 }
 
 /* RESPONSIVO */
@@ -151,14 +141,5 @@
   .form-group-row {
     grid-template-columns: 1fr;
     gap: 15px;
-  }
-
-  .button-group {
-    flex-direction: column;
-  }
-
-  .btn-agendar,
-  .btn-limpiar {
-    width: 100%;
   }
 }

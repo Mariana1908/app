@@ -6,7 +6,7 @@ import { ClienteService } from '../../../servicios/cliente.service';
 import { Cliente } from '../../../interfaces/cliente.model';
 
 @Component({
-  selector: 'app-lista-clientes.component',
+  selector: 'app-lista-clientes',
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './lista-clientes.component.html',
@@ -113,12 +113,17 @@ export class ListaClientesComponent implements OnInit {
     return pages;
   }
 
+  // Navegación con el prefijo /app
+  irAlMenu() {
+    this.router.navigate(['/app/dashboard']);
+  }
+
   verDetalle(id: number) {
-    this.router.navigate(['/clientes', id]);
+    this.router.navigate(['/app/clientes', id]);
   }
 
   nuevoCliente() {
-    this.router.navigate(['/clientes/nuevo']);
+    this.router.navigate(['/app/clientes/nuevo']);
   }
 
   eliminarCliente(id: number, nombre: string) {

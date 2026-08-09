@@ -1,8 +1,8 @@
 .dashboard-wrapper {
   min-height: 100vh;
-  background-color: #f8f9fa;
+  background-color: #f4f4f4;
   font-family: Arial, sans-serif;
-  margin: -1.5rem -1.5rem 0 -1.5rem; /* Elimina márgenes extra si existen en el contenedor padre */
+  margin: -1.5rem -1.5rem 0 -1.5rem;
 }
 
 /* BARRA SUPERIOR BEIGE DEGRADADA */
@@ -10,7 +10,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 40px;
+  padding: 18px 48px;
   background: linear-gradient(135deg, #d8c3b5 0%, #f7eee7 100%);
   border-bottom: 1px solid #e8ded8;
 }
@@ -40,7 +40,7 @@
   background-color: #724d38;
   color: white;
   border: none;
-  padding: 8px 20px;
+  padding: 8px 22px;
   border-radius: 8px;
   font-weight: bold;
   font-size: 14px;
@@ -54,18 +54,18 @@
 
 /* CONTENEDOR PRINCIPAL */
 .dashboard-container {
-  max-width: 1200px;
+  max-width: 1100px;
   margin: 0 auto;
-  padding: 40px 20px;
+  padding: 48px 40px;
 }
 
 .welcome-section {
-  margin-bottom: 35px;
+  margin-bottom: 32px;
 }
 
 .welcome-title {
-  font-size: 30px;
-  font-weight: bold;
+  font-size: 36px;
+  font-weight: 800;
   color: #2b2b48;
   margin: 0 0 6px 0;
 }
@@ -76,30 +76,44 @@
   margin: 0;
 }
 
-/* ESTILOS DE TARJETAS */
+/* DISPOSICIÓN EN GRID DE 2 COLUMNAS */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  width: 100%;
+}
+
+/* TARJETAS COMPACTAS COMO LA CAPTURA DE REFERENCIA */
 .dashboard-card {
   background-color: #ffffff;
-  border-radius: 12px;
-  padding: 24px;
+  border-radius: 16px;
+  padding: 24px 28px;
   display: flex;
   align-items: center;
-  gap: 16px;
-  height: 100%;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+  gap: 24px;
+  width: 100%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
   border: 1px solid #f0f0f0;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box;
 }
 
 .dashboard-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+}
+
+/* LA TERCERA TARJETA OCUPA LA FILA INFERIOR COMPLETA */
+.card-full-width {
+  grid-column: 1 / -1;
 }
 
 /* CÍRCULOS DE ÍCONOS */
 .card-icon {
-  width: 50px;
-  height: 50px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
   flex-shrink: 0;
 }
@@ -118,14 +132,14 @@
 
 /* TEXTOS DE TARJETAS */
 .card-info h2 {
-  font-size: 17px;
+  font-size: 18px;
   font-weight: bold;
   color: #2b2b48;
   margin: 0 0 4px 0;
 }
 
 .card-info p {
-  font-size: 13px;
+  font-size: 13.5px;
   color: #6b7280;
   margin: 0;
 }

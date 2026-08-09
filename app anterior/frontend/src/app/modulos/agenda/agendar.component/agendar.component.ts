@@ -50,13 +50,14 @@ export class AgendarComponent implements OnInit {
     });
   }
 
-  volverAlPanel(): void {
-    this.router.navigate(['/dashboard']);
-  }
+  // Redirige al panel de la agenda en lugar del dashboard general
+ volverAlPanel(): void {
+  this.router.navigate(['/app/agenda']);
+}
 
-  cancelar(): void {
-    this.router.navigate(['/agenda']);
-  }
+cancelar(): void {
+  this.router.navigate(['/app/agenda']);
+}
 
   agendarCita(): void {
     const nuevaCita = {
@@ -73,7 +74,7 @@ export class AgendarComponent implements OnInit {
     console.log('Cita registrada:', nuevaCita);
     alert('¡Cita agendada con éxito!');
     this.resetForm();
-    this.router.navigate(['/agenda']); // Redirige a la lista de agenda
+    this.router.navigate(['/agenda']);
   }
 
   resetForm(): void {

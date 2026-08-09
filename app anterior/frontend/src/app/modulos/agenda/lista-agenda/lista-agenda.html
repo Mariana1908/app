@@ -3,17 +3,19 @@
   <!-- BANNER DE ENCABEZADO -->
   <div class="header-banner">
     <div class="header-left">
-      <button type="button" class="btn-primary-custom" (click)="irAlMenu()">
+      <button type="button" class="btn-primary-custom" [routerLink]="['/app/dashboard']">
         Menú principal
       </button>
       <h1 class="header-title">Agenda de Citas</h1>
     </div>
 
     <div class="header-actions">
-      <button type="button" class="btn-primary-custom" (click)="agendarCita()">
+      <!-- Enlace directo al formulario de agendar cita -->
+      <button type="button" class="btn-primary-custom" [routerLink]="['/app/agenda/nuevo']">
         + Agendar nueva cita
       </button>
-      <button type="button" class="btn-primary-custom" (click)="nuevoCliente()">
+      <!-- Enlace directo a registro de cliente -->
+      <button type="button" class="btn-primary-custom" [routerLink]="['/app/clientes/nuevo']">
         + Nuevo Cliente
       </button>
     </div>
@@ -23,31 +25,72 @@
   <div class="card-box filter-card">
     <div class="filter-group">
       <div class="btn-toggle-group">
-        <button type="button" class="btn-toggle active">Hoy</button>
-        <button type="button" class="btn-toggle">Semana</button>
-        <button type="button" class="btn-toggle">Mes</button>
+        <button 
+          type="button" 
+          class="btn-toggle" 
+          [class.active]="filtroRango === 'hoy'" 
+          (click)="cambiarRango('hoy')">
+          Hoy
+        </button>
+        <button 
+          type="button" 
+          class="btn-toggle" 
+          [class.active]="filtroRango === 'semana'" 
+          (click)="cambiarRango('semana')">
+          Semana
+        </button>
+        <button 
+          type="button" 
+          class="btn-toggle" 
+          [class.active]="filtroRango === 'mes'" 
+          (click)="cambiarRango('mes')">
+          Mes
+        </button>
       </div>
 
       <div class="filter-item">
-        <label>Día:</label>
-        <input type="date" class="input-filter" />
+        <label for="filtroFecha">Día:</label>
+        <input 
+          type="date" 
+          id="filtroFecha" 
+          class="input-filter" 
+          [(ngModel)]="filtroFecha" 
+          (change)="aplicarFiltros()" 
+        />
       </div>
 
       <div class="filter-item">
-        <label>Estilista:</label>
-        <select class="select-filter">
+        <label for="filtroEstilista">Estilista:</label>
+        <select 
+          id="filtroEstilista" 
+          class="select-filter" 
+          [(ngModel)]="filtroEstilista" 
+          (change)="aplicarFiltros()">
           <option value="">-- Todos --</option>
+          @for (estilista of listaEstilistas; track estilista.id) {
+            <option [value]="estilista.id">{{ estilista.nombre }}</option>
+          }
         </select>
       </div>
 
       <div class="filter-item">
-        <label>Estatus Cita:</label>
-        <select class="select-filter">
+        <label for="filtroEstatus">Estatus Cita:</label>
+        <select 
+          id="filtroEstatus" 
+          class="select-filter" 
+          [(ngModel)]="filtroEstatus" 
+          (change)="aplicarFiltros()">
           <option value="">Todos</option>
+          <option value="Pendiente">Pendiente</option>
+          <option value="Confirmada">Confirmada</option>
+          <option value="Completada">Completada</option>
+          <option value="Cancelada">Cancelada</option>
         </select>
       </div>
 
-      <button type="button" class="btn-limpiar">Limpiar filtros</button>
+      <button type="button" class="btn-limpiar" (click)="limpiarFiltros()">
+        Limpiar filtros
+      </button>
     </div>
   </div>
 
@@ -68,9 +111,48 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td colspan="9" class="no-data">No hay citas registradas para este filtro.</td>
-        </tr>
+        @for (cita of citas; track cita.id) {
+          <tr>
+            <td>{{ cita.fechaHora }}</td>
+            <td>{{ cita.clienteNombre }}</td>
+            <td>{{ cita.estilistaNombre }}</td>
+            <td>{{ cita.notas || 'N/A' }}</td>
+            <td>{{ cita.anticipo | currency:'MXN':'symbol':'1.2-2' }}</td>
+            <td>
+              <span class="badge" [ngClass]="{
+                'badge-success': cita.estatusAnticipo === 'Pagado',
+                'badge-warning': cita.estatusAnticipo === 'Pendiente'
+              }">
+                {{ cita.estatusAnticipo }}
+              </span>
+            </td>
+            <td>{{ cita.referenciaBancaria || 'N/A' }}</td>
+            <td>
+              <span class="badge" [ngClass]="{
+                'badge-warning': cita.estatusCita === 'Pendiente',
+                'badge-info': cita.estatusCita === 'Confirmada',
+                'badge-success': cita.estatusCita === 'Completada',
+                'badge-danger': cita.estatusCita === 'Cancelada'
+              }">
+                {{ cita.estatusCita }}
+              </span>
+            </td>
+            <td class="text-center">
+              <div class="action-buttons">
+                <button type="button" class="btn-action-edit" (click)="editarCita(cita.id)">
+                  Editar
+                </button>
+                <button type="button" class="btn-action-cancel" (click)="cancelarCita(cita.id)">
+                  Cancelar
+                </button>
+              </div>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="9" class="no-data">No hay citas registradas para este filtro.</td>
+          </tr>
+        }
       </tbody>
     </table>
   </div>

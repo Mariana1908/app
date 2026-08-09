@@ -1,12 +1,13 @@
 <div class="form-cliente-container">
 
-  <!-- BANNER DE ENCABEZADO -->
+  <!-- BANNER DE ENCABEZADO DE LA DEMO -->
   <div class="header-banner">
-    <div class="header-left">
-      <button type="button" class="btn-primary-custom" (click)="cancelar()">
-        Menú principal
-      </button>
-      <h1 class="header-title">{{ esEdicion ? 'Editar Cliente' : 'Nuevo Cliente' }}</h1>
+    <div class="banner-title-group">
+      <span class="banner-icon">➕</span>
+      <div class="banner-text">
+        <h1>{{ esEdicion ? 'Editar Cliente' : 'Nuevo Cliente' }}</h1>
+        <p>Completa los datos para registrar un nuevo cliente</p>
+      </div>
     </div>
   </div>
 
@@ -21,7 +22,7 @@
       
       <!-- SECCIÓN: INFORMACIÓN BÁSICA -->
       <div class="form-section">
-        <h2 class="form-section-title">📋 Información Básica</h2>
+        <h2 class="form-section-title">📄 Información Básica</h2>
         
         <div class="form-group full-width">
           <label for="nombre">Nombre Completo <span class="required">*</span></label>
@@ -37,7 +38,7 @@
           <span class="form-help">Nombre completo del cliente</span>
         </div>
 
-        <div class="form-grid-3">
+        <div class="form-grid-2">
           <div class="form-group">
             <label for="tel">Teléfono <span class="required">*</span></label>
             <input
@@ -61,22 +62,6 @@
               [(ngModel)]="cliente.fecha_nac"
               name="fecha_nac"
             />
-          </div>
-
-          <div class="form-group">
-            <label for="genero">Género</label>
-            <select
-              id="genero"
-              class="input-field select-field"
-              [(ngModel)]="cliente.genero"
-              name="genero"
-            >
-              <option value="">Selecciona un género</option>
-              <option value="femenino">Femenino</option>
-              <option value="masculino">Masculino</option>
-              <option value="otro">Otro</option>
-            </select>
-            <span class="form-help">Opcional</span>
           </div>
         </div>
       </div>
@@ -159,10 +144,10 @@
       <!-- ACCIONES DEL FORMULARIO -->
       <div class="form-actions">
         <button type="button" class="btn-secundario" (click)="cancelar()">
-          Cancelar
+          ✕ Cancelar
         </button>
         <button type="submit" class="btn-primary-custom" [disabled]="guardando">
-          {{ guardando ? 'Guardando...' : 'Guardar' }}
+          ✓ {{ guardando ? 'Guardando...' : 'Guardar' }}
         </button>
       </div>
 

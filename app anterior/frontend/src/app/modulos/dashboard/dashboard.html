@@ -18,39 +18,33 @@
       <p class="welcome-subtitle">¿Qué vamos a hacer hoy, Administrador?</p>
     </div>
 
-    <!-- TARJETAS DE OPCIONES EN GRID -->
-    <div class="row g-4">
+    <!-- REJILLA DE TARJETAS -->
+    <div class="cards-grid">
       
       <!-- Tarjeta 1: Clientes -->
-      <div class="col-md-4">
-        <div class="dashboard-card" [routerLink]="['/app/clientes']">
-          <div class="card-icon icon-blue"></div>
-          <div class="card-info">
-            <h2>Gestión de Clientes</h2>
-            <p>Registra y consulta tus clientes.</p>
-          </div>
+      <div class="dashboard-card" [routerLink]="['/app/clientes']">
+        <div class="card-icon icon-blue"></div>
+        <div class="card-info">
+          <h2>Gestión de Clientes</h2>
+          <p>Registra y consulta tus clientes.</p>
         </div>
       </div>
 
-      <!-- Tarjeta 2: Agenda (CORREGIDO) -->
-      <div class="col-md-4">
-        <div class="dashboard-card" [routerLink]="['/app/agenda']">
-          <div class="card-icon icon-green"></div>
-          <div class="card-info">
-            <h2>Agenda de Citas</h2>
-            <p>Consulta y organiza tus citas.</p>
-          </div>
+      <!-- Tarjeta 2: Agenda -->
+      <div class="dashboard-card" [routerLink]="['/app/agenda']">
+        <div class="card-icon icon-green"></div>
+        <div class="card-info">
+          <h2>Agenda de Citas</h2>
+          <p>Consulta y organiza tus citas.</p>
         </div>
       </div>
 
-      <!-- Tarjeta 3: Reportes -->
-      <div class="col-md-4">
-        <div class="dashboard-card" [routerLink]="['/app/reportes']">
-          <div class="card-icon icon-purple"></div>
-          <div class="card-info">
-            <h2>Reportes y Estadísticas</h2>
-            <p>Consulta métricas e ingresos.</p>
-          </div>
+      <!-- Tarjeta 3: Reportes (Fila inferior) -->
+      <div class="dashboard-card card-full-width" [routerLink]="['/app/reportes']">
+        <div class="card-icon icon-purple"></div>
+        <div class="card-info">
+          <h2>Reportes y Estadísticas</h2>
+          <p>Consulta métricas e ingresos.</p>
         </div>
       </div>
 

@@ -28,6 +28,11 @@
         />
       </div>
 
+      <!-- Alerta de error (se muestra solo cuando errorMessage tiene texto) -->
+      <div *ngIf="errorMessage" class="error-alert">
+        {{ errorMessage }}
+      </div>
+
       <button type="submit" class="btn-login">Entrar</button>
     </form>
   </div>

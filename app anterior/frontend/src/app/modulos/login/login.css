@@ -1,79 +1,120 @@
+/* `:host` representa el componente de login en sí. 
+   Ocupa el 100% de la pantalla y rompe márgenes por defecto */
+:host {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+/* Contenedor principal centrado a pantalla completa */
 .login-wrapper {
-  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #dfd7cc 0%, #ede6dd 50%, #f7f3ee 100%);
-  font-family: Arial, sans-serif;
-  margin: -1.5rem; /* Remueve márgenes en caso de que el layout global tenga padding/margin */
+  width: 100%;
+  height: 100%;
+  background-color: #d6cabe; /* Tono beige exacto de la demo */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+/* Tarjeta contenedora blanca */
 .login-card {
-  background: #ffffff;
-  padding: 48px 40px;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  background-color: #ffffff;
   width: 100%;
   max-width: 420px;
+  padding: 2.5rem 2rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
   text-align: center;
+  box-sizing: border-box;
 }
 
+/* Títulos */
 .login-header h2 {
-  font-size: 26px;
-  font-weight: bold;
-  color: #2b2b48;
-  margin: 0 0 8px 0;
+  color: #2b2b2b;
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
 }
 
 .login-header p {
-  font-size: 14px;
-  color: #71717a;
-  margin: 0 0 32px 0;
+  color: #8c8c8c;
+  font-size: 0.9rem;
+  margin-bottom: 2rem;
 }
 
+/* Grupos del formulario */
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
 }
 
+/* Campos de texto (Input) */
 .input-field {
   width: 100%;
-  padding: 14px 18px;
-  border: 1px solid #e4e4e7;
+  padding: 0.85rem 1rem;
+  font-size: 0.95rem;
+  border: 1px solid #dcd4cc;
   border-radius: 10px;
-  font-size: 14px;
   outline: none;
-  box-sizing: border-box;
   background-color: #ffffff;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition: all 0.2s ease-in-out;
+  box-sizing: border-box;
 }
 
 .input-field::placeholder {
-  color: #9ca3af;
+  color: #a0a0a0;
 }
 
+/* Estado Focus */
 .input-field:focus {
-  border-color: #6b4426;
-  box-shadow: 0 0 0 3px rgba(107, 68, 38, 0.1);
+  border-color: #4a72b8;
+  box-shadow: 0 0 0 1px #4a72b8;
 }
 
+/* ALERTA DE ERROR DE CREDENCIALES */
+.error-alert {
+  background-color: #fde8e8;
+  color: #e03838;
+  border-left: 4px solid #d93838;
+  padding: 12px 16px;
+  border-radius: 6px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 1.25rem;
+  box-sizing: border-box;
+}
+
+/* Botón de envío */
 .btn-login {
   width: 100%;
-  background-color: #6b4426;
+  padding: 0.9rem;
+  margin-top: 0.5rem;
+  background-color: #693a20;
   color: #ffffff;
+  font-size: 1rem;
+  font-weight: 700;
   border: none;
-  padding: 14px;
-  border-radius: 12px;
-  font-weight: bold;
-  font-size: 16px;
+  border-radius: 10px;
   cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.1s ease;
-  margin-top: 10px;
+  transition: background-color 0.25s ease;
+
+  /* Propiedades para centrar el texto */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 .btn-login:hover {
-  background-color: #54341c;
-}
-
-.btn-login:active {
-  transform: scale(0.99);
+  background-color: #cb9d7c;
 }

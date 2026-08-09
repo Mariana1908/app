@@ -9,32 +9,34 @@ import { AgendarComponent } from './modulos/agenda/agendar.component/agendar.com
 import { ReportesComponent } from './modulos/reportes/reportes';
 
 export const routes: Routes = [
-  // Redirección inicial a /app/dashboard
-  { path: '', redirectTo: 'app/dashboard', pathMatch: 'full' },
+  // Redirección inicial a /login al abrir la app
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
 
-  // Agrupador con prefijo /app
+  // Ruta pública de autenticación
+  { path: 'login', component: LoginComponent },
+
+  // Agrupador con prefijo /app (Módulos protegidos del panel)
   {
     path: 'app',
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-      { path: 'login', component: LoginComponent },
       { path: 'dashboard', component: DashboardComponent },
       
       // Agenda
-      { path: 'agenda', component: ListaAgendaComponent },          // /app/agenda (Tabla)
-      { path: 'agenda/nuevo', component: AgendarComponent },       // /app/agenda/nuevo (Formulario)
+      { path: 'agenda/nuevo', component: AgendarComponent },      // /app/agenda/nuevo
+      { path: 'agenda', component: ListaAgendaComponent },          // /app/agenda
       
       // Clientes
-      { path: 'clientes', component: ListaClientesComponent },
       { path: 'clientes/nuevo', component: FormClienteComponent },
       { path: 'clientes/editar/:id', component: FormClienteComponent },
       { path: 'clientes/:id', component: DetalleClienteComponent },
+      { path: 'clientes', component: ListaClientesComponent },
       
       // Reportes
       { path: 'reportes', component: ReportesComponent }
     ]
   },
 
-  // Redirección comodín
-  { path: '**', redirectTo: 'app/dashboard' }
+  // Cualquier ruta no encontrada enviará al login
+  { path: '**', redirectTo: 'login' }
 ];
