@@ -54,6 +54,97 @@
   margin: 0;
 }
 
+/* BOTÓN EXPORTAR EXCEL */
+.btn-export-excel {
+  background-color: #1e7145;
+  color: #ffffff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn-export-excel:hover {
+  background-color: #144e2f;
+}
+
+.btn-export-excel:active {
+  transform: scale(0.98);
+}
+
+/* BARRA DE FILTROS DE FECHA Y RANGO RÁPIDO */
+.filters-card {
+  background-color: #ffffff;
+  border: 1px solid #edf2f7;
+  border-radius: 12px;
+  padding: 16px 24px;
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.filter-inputs {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #4a5568;
+  font-weight: 600;
+}
+
+.filter-group input[type="date"] {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e0;
+  font-size: 14px;
+  outline: none;
+  color: #2d3748;
+  background-color: #f8fafc;
+}
+
+.filter-group input[type="date"]:focus {
+  border-color: #6b4426;
+}
+
+.quick-filters {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #718096;
+}
+
+.btn-quick {
+  background-color: #edf2f7;
+  border: 1px solid #e2e8f0;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  color: #2d3748;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.btn-quick:hover {
+  background-color: #e2e8f0;
+  color: #1a202c;
+}
+
 /* Subtítulo */
 .subtitle {
   color: #718096;
@@ -64,7 +155,7 @@
 /* Rejilla de Métricas (KPIs) */
 .kpi-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 1.5rem;
   margin-bottom: 2rem;
 }

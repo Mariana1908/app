@@ -8,28 +8,62 @@
       </button>
       <h1 class="header-title">Reportes y Estadísticas</h1>
     </div>
+
+    <!-- BOTÓN DE EXPORTACIÓN A EXCEL -->
+    <button type="button" class="btn-export-excel" (click)="generarExcel()">
+      📊 Exportar Excel
+    </button>
   </div>
 
   <!-- CONTENIDO PRINCIPAL DE REPORTES -->
   <div class="reportes-body">
+
+    <!-- BARRA DE FILTROS Y SELECCIÓN RÁPIDA -->
+    <div class="filters-card">
+      <div class="filter-inputs">
+        <div class="filter-group">
+          <label>Desde:</label>
+          <input type="date" [(ngModel)]="fechaInicio" />
+        </div>
+        <div class="filter-group">
+          <label>Hasta:</label>
+          <input type="date" [(ngModel)]="fechaFin" />
+        </div>
+      </div>
+
+      <div class="quick-filters">
+        <span>Filtro rápido:</span>
+        <button type="button" class="btn-quick" (click)="seleccionarRangoRapido('hoy')">Hoy</button>
+        <button type="button" class="btn-quick" (click)="seleccionarRangoRapido('semana')">Esta semana</button>
+        <button type="button" class="btn-quick" (click)="seleccionarRangoRapido('mes')">Este mes</button>
+      </div>
+    </div>
+
     <p class="subtitle">Resumen general del negocio</p>
 
+    <!-- TARJETAS DE INDICADORES (KPIs) -->
     <div class="kpi-grid">
       <div class="kpi-card">
         <h3>Citas del Mes</h3>
-        <p class="kpi-value">0</p>
+        <p class="kpi-value">{{ resumen.citasDelMes }}</p>
       </div>
 
       <div class="kpi-card">
         <h3>Ingresos Estimados</h3>
-        <p class="kpi-value">$0.00</p>
+        <p class="kpi-value">${{ resumen.ingresosEstimados | number:'1.2-2' }}</p>
+      </div>
+
+      <div class="kpi-card">
+        <h3>Total del Día (Cierre)</h3>
+        <p class="kpi-value">${{ resumen.totalDia | number:'1.2-2' }}</p>
       </div>
 
       <div class="kpi-card">
         <h3>Clientes Nuevos</h3>
-        <p class="kpi-value">0</p>
+        <p class="kpi-value">{{ resumen.clientesNuevos }}</p>
       </div>
     </div>
+
   </div>
 
 </div>
