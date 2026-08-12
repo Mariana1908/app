@@ -50,7 +50,7 @@
             (change)="cargarReporte()" 
             class="select-estilista"
           >
-            <option value="TODOS">Todos los estilistas</option>
+            <option value="todos">Todos los estilistas</option>
             <option *ngFor="let est of estilistas" [value]="est.id">
               {{ est.nombre }}
             </option>
@@ -74,7 +74,7 @@
     <div class="main-summary-bar">
       <div class="summary-item">
         <span class="summary-label">Total de Citas Atendidas:</span>
-        <span class="summary-value">{{ desglose.totalCitas }}</span>
+        <span class="summary-value">{{ totalCitas }}</span>
       </div>
       <div class="summary-item">
         <span class="summary-label">Clientes Nuevos:</span>
@@ -82,57 +82,24 @@
       </div>
     </div>
 
-    <!-- DESGLOSE DE SERVICIOS POR COLUMNAS/TARJETAS -->
+    <!-- DESGLOSE DINÁMICO DE SERVICIOS -->
     <h2 class="section-title">Servicios Realizados</h2>
-    <div class="services-grid">
-      <div class="service-card">
-        <div class="service-icon">✂️</div>
-        <div class="service-info">
-          <h3>Cortes</h3>
-          <p class="service-count">{{ desglose.corte }}</p>
-        </div>
-      </div>
-
-      <div class="service-card">
-        <div class="service-icon">🎨</div>
-        <div class="service-info">
-          <h3>Tintes</h3>
-          <p class="service-count">{{ desglose.tinte }}</p>
-        </div>
-      </div>
-
-      <div class="service-card">
-        <div class="service-icon">🖌️</div>
-        <div class="service-info">
-          <h3>Retoques</h3>
-          <p class="service-count">{{ desglose.retoque }}</p>
-        </div>
-      </div>
-
-      <div class="service-card">
-        <div class="service-icon">💇‍♀️</div>
-        <div class="service-info">
-          <h3>Peinados</h3>
-          <p class="service-count">{{ desglose.peinado }}</p>
-        </div>
-      </div>
-
-      <div class="service-card">
+    
+    <div class="services-grid" *ngIf="serviciosRealizados && serviciosRealizados.length > 0; else sinServicios">
+      <div class="service-card" *ngFor="let s of serviciosRealizados">
         <div class="service-icon">✨</div>
         <div class="service-info">
-          <h3>Tratamientos</h3>
-          <p class="service-count">{{ desglose.tratamiento }}</p>
-        </div>
-      </div>
-
-      <div class="service-card">
-        <div class="service-icon">💅</div>
-        <div class="service-info">
-          <h3>Otros</h3>
-          <p class="service-count">{{ desglose.otros }}</p>
+          <h3>{{ s.servicio }}</h3>
+          <p class="service-count">{{ s.total }}</p>
         </div>
       </div>
     </div>
+
+    <ng-template #sinServicios>
+      <div class="no-data-msg">
+        <p>No hay registros de servicios en el periodo seleccionado.</p>
+      </div>
+    </ng-template>
 
   </div>
 
