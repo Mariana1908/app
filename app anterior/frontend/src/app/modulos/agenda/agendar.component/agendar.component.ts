@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 import { ServicioService, Servicio } from '../../../servicios/servicio.service';
 
@@ -34,6 +35,7 @@ export class AgendarComponent implements OnInit {
 
   constructor(
     private serviciosService: ServicioService,
+    private http: HttpClient,
     private router: Router
   ) {}
 
@@ -86,29 +88,28 @@ export class AgendarComponent implements OnInit {
       return;
     }
 
-    if (!this.horaFin) {
-      alert('Por favor, selecciona la hora de fin.');
-      return;
-    }
-
-    // 2. Construcción del objeto Cita
+    // 2. Construcción del objeto Cita ajustado a la BD
     const nuevaCita = {
       cliente: this.clienteSearch.trim(),
       estilista: this.estilista,
       servicioId: this.servicio,
       fecha: this.fecha,
       horaInicio: this.horaInicio,
-      horaFin: this.horaFin,
-      anticipo: this.anticipo,
       notas: this.notas
     };
 
-    console.log('Cita registrada:', nuevaCita);
-    alert('¡Cita agendada con éxito!');
-
-    // 3. Limpieza y redirección a la agenda
-    this.resetForm();
-    this.router.navigate(['/app/agenda']);
+    // 3. Envío al Backend
+    this.http.post('http://localhost:3000/api/agenda', nuevaCita).subscribe({
+      next: (res: any) => {
+        alert('¡Cita agendada con éxito!');
+        this.resetForm();
+        this.router.navigate(['/app/agenda']);
+      },
+      error: (err) => {
+        console.error('Error al guardar cita en backend:', err);
+        alert('Ocurrió un error al guardar la cita en la base de datos.');
+      }
+    });
   }
 
   resetForm(): void {

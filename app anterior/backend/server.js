@@ -14,14 +14,32 @@ app.use(express.urlencoded({ extended: true }));
 // Servir archivos estáticos (fotos)
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// Rutas
-app.use('/api/clientes', require('./routes/clienteRoutes'));
-app.use('/api/estado', require('./routes/estadoRoutes'));
-app.use('/api/visitas', require('./routes/visitaRoutes'));
-app.use('/api/servicios', require('./routes/servicioRoutes'));
-app.use('/api/agenda', require('./routes/agendaRoutes')); // <-- RUTA DE AGENDA
+// Cargar rutas de forma segura
+const cargarRuta = (rutaModulo) => {
+  try {
+    return require(rutaModulo);
+  } catch (err) {
+    console.error(`⚠️ No se pudo cargar el módulo [${rutaModulo}]:`, err.message);
+    return null;
+  }
+};
 
-// Ruta de prueba
+// Asignación de Rutas API
+const clienteRoutes = cargarRuta('./routes/clienteRoutes');
+const estadoRoutes = cargarRuta('./routes/estadoRoutes');
+const visitaRoutes = cargarRuta('./routes/visitaRoutes');
+const servicioRoutes = cargarRuta('./routes/servicioRoutes');
+const agendaRoutes = cargarRuta('./routes/agendaRoutes');
+const reportesRoutes = cargarRuta('./routes/reportesRoutes');
+
+if (clienteRoutes) app.use('/api/clientes', clienteRoutes);
+if (estadoRoutes) app.use('/api/estado', estadoRoutes);
+if (visitaRoutes) app.use('/api/visitas', visitaRoutes);
+if (servicioRoutes) app.use('/api/servicios', servicioRoutes);
+if (agendaRoutes) app.use('/api/agenda', agendaRoutes);
+if (reportesRoutes) app.use('/api/reportes', reportesRoutes);
+
+// Ruta de prueba base
 app.get('/', (req, res) => {
   res.json({ mensaje: 'API Estética funcionando correctamente' });
 });
@@ -29,7 +47,7 @@ app.get('/', (req, res) => {
 // Manejo de errores
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).json({ error: 'Algo salió mal!' });
+  res.status(500).json({ error: 'Algo salió mal en el servidor!' });
 });
 
 // Iniciar servidor

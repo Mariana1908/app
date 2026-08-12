@@ -9,9 +9,8 @@ exports.obtenerCitas = async (req, res) => {
         a.fecha,
         a.hora,
         a.cliente_tel,
-        a.anticipo,
         a.notas,
-        COALESCE(c.nombre, a.cliente_tel) AS cliente,
+        COALESCE(c.nombre, a.cliente_tel, 'Cliente General') AS cliente,
         e.nombre AS estilista,
         s.nombre AS servicio,
         p.descripcion AS estado
@@ -26,36 +25,52 @@ exports.obtenerCitas = async (req, res) => {
     res.json(citas);
   } catch (error) {
     console.error('Error al obtener agenda:', error);
-    res.status(500).json({ error: 'Error al consultar las citas.' });
+    res.status(500).json({ error: 'Error al consultar las citas.', detalle: error.message });
   }
 };
 
 // POST /api/agenda -> Crear nueva cita desde Angular
 exports.crearCita = async (req, res) => {
-  const { cliente, estilista, servicioId, fecha, horaInicio, anticipo, notas } = req.body;
+  const { cliente, estilista, servicioId, fecha, horaInicio, notas } = req.body;
 
   if (!cliente || !estilista || !servicioId || !fecha || !horaInicio) {
     return res.status(400).json({ error: 'Todos los campos obligatorios deben estar completos.' });
   }
 
   try {
-    const [clientesEncontrados] = await db.query(
-      'SELECT id, tel FROM clientes WHERE nombre LIKE ? LIMIT 1',
-      [`%${cliente.trim()}%`]
-    );
+    // 1. Buscar cliente por nombre
+    let clienteId = null;
+    let clienteTel = null;
+    if (cliente && cliente.trim()) {
+      const [clientesEncontrados] = await db.query(
+        'SELECT id, tel FROM clientes WHERE nombre LIKE ? LIMIT 1',
+        [`%${cliente.trim()}%`]
+      );
+      if (clientesEncontrados.length > 0) {
+        clienteId = clientesEncontrados[0].id;
+        clienteTel = clientesEncontrados[0].tel;
+      }
+    }
 
-    const clienteId = clientesEncontrados.length > 0 ? clientesEncontrados[0].id : null;
-    const clienteTel = clientesEncontrados.length > 0 ? clientesEncontrados[0].tel : null;
+    // 2. Formatear la hora
     const horaFormateada = horaInicio.length === 5 ? `${horaInicio}:00` : horaInicio;
 
+    // 3. Obtener el id del estado Pendiente en tabla pivote (tipo S)
     const [estadoPendiente] = await db.query(
       "SELECT id FROM pivote WHERE tipo = 'S' AND clave = 'P' LIMIT 1"
     );
     const estadoId = estadoPendiente.length > 0 ? estadoPendiente[0].id : null;
 
+    // 4. Parsear IDs previniendo valores 'NaN'
+    const estilistaParsed = parseInt(estilista, 10);
+    const servicioParsed = parseInt(servicioId, 10);
+
+    const estilistaFinal = isNaN(estilistaParsed) ? null : estilistaParsed;
+    const servicioFinal = isNaN(servicioParsed) ? null : servicioParsed;
+
     const sql = `
-      INSERT INTO agenda (fecha, hora, cliente_id, cliente_tel, estilista_id, servicio_id, anticipo, notas, estado_id)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO agenda (fecha, hora, cliente_id, cliente_tel, estilista_id, servicio_id, notas, estado_id)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     `;
 
     const values = [
@@ -63,9 +78,8 @@ exports.crearCita = async (req, res) => {
       horaFormateada,
       clienteId,
       clienteTel,
-      parseInt(estilista, 10),
-      parseInt(servicioId, 10),
-      anticipo || 0.00,
+      estilistaFinal,
+      servicioFinal,
       notas || null,
       estadoId
     ];
@@ -79,7 +93,7 @@ exports.crearCita = async (req, res) => {
 
   } catch (error) {
     console.error('Error al registrar en agenda:', error);
-    res.status(500).json({ error: 'Error interno del servidor al guardar la cita.' });
+    res.status(500).json({ error: 'Error interno del servidor al guardar la cita.', detalle: error.message });
   }
 };
 
@@ -108,25 +122,30 @@ exports.obtenerEstadisticas = async (req, res) => {
     }
 
     if (estilistaId && estilistaId !== 'todos') {
-      whereCitas += ' AND a.estilista_id = ?';
-      paramsCitas.push(parseInt(estilistaId, 10));
+      const parsedEstilista = parseInt(estilistaId, 10);
+      if (!isNaN(parsedEstilista)) {
+        whereCitas += ' AND a.estilista_id = ?';
+        paramsCitas.push(parsedEstilista);
+      }
     }
 
-    // 1. Total Citas Atendidas
+    // 1. Total Citas Atendidas / Agendadas
     const sqlTotalCitas = `SELECT COUNT(*) AS total FROM agenda a ${whereCitas}`;
-    const [[{ total: totalCitas }]] = await db.query(sqlTotalCitas, paramsCitas);
+    const [resTotalCitas] = await db.query(sqlTotalCitas, paramsCitas);
+    const totalCitas = resTotalCitas[0] ? resTotalCitas[0].total : 0;
 
-    // 2. Clientes Nuevos registrados en ese rango (usando fecha_reg)
+    // 2. Clientes Nuevos registrados
     const sqlClientesNuevos = `SELECT COUNT(*) AS total FROM clientes c ${whereClientes}`;
-    const [[{ total: clientesNuevos }]] = await db.query(sqlClientesNuevos, paramsClientes);
+    const [resClientesNuevos] = await db.query(sqlClientesNuevos, paramsClientes);
+    const clientesNuevos = resClientesNuevos[0] ? resClientesNuevos[0].total : 0;
 
     // 3. Desglose de servicios realizados
     const sqlServicios = `
       SELECT 
-        s.nombre AS servicio, 
+        COALESCE(s.nombre, 'Sin servicio') AS servicio, 
         COUNT(a.id) AS total
       FROM agenda a
-      INNER JOIN servicios s ON a.servicio_id = s.id
+      LEFT JOIN servicios s ON a.servicio_id = s.id
       ${whereCitas}
       GROUP BY s.id, s.nombre
       ORDER BY total DESC
@@ -143,6 +162,6 @@ exports.obtenerEstadisticas = async (req, res) => {
 
   } catch (error) {
     console.error('Error al obtener reporte de estadísticas:', error);
-    res.status(500).json({ error: 'Error al consultar estadísticas.' });
+    res.status(500).json({ error: 'Error al consultar estadísticas.', detalle: error.message });
   }
 };
