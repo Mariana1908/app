@@ -50,18 +50,50 @@ export class AgendarComponent implements OnInit {
     });
   }
 
-  // Redirige al panel de la agenda en lugar del dashboard general
- volverAlPanel(): void {
-  this.router.navigate(['/app/agenda']);
-}
+  // Redirige al panel de la agenda
+  volverAlPanel(): void {
+    this.router.navigate(['/app/agenda']);
+  }
 
-cancelar(): void {
-  this.router.navigate(['/app/agenda']);
-}
+  cancelar(): void {
+    this.router.navigate(['/app/agenda']);
+  }
 
   agendarCita(): void {
+    // 1. Validaciones de campos obligatorios
+    if (!this.clienteSearch || !this.clienteSearch.trim()) {
+      alert('Por favor, ingresa el nombre del cliente.');
+      return;
+    }
+
+    if (!this.estilista) {
+      alert('Por favor, selecciona un estilista.');
+      return;
+    }
+
+    if (!this.servicio) {
+      alert('Por favor, selecciona un servicio.');
+      return;
+    }
+
+    if (!this.fecha) {
+      alert('Por favor, selecciona la fecha.');
+      return;
+    }
+
+    if (!this.horaInicio) {
+      alert('Por favor, selecciona la hora de inicio.');
+      return;
+    }
+
+    if (!this.horaFin) {
+      alert('Por favor, selecciona la hora de fin.');
+      return;
+    }
+
+    // 2. Construcción del objeto Cita
     const nuevaCita = {
-      cliente: this.clienteSearch,
+      cliente: this.clienteSearch.trim(),
       estilista: this.estilista,
       servicioId: this.servicio,
       fecha: this.fecha,
@@ -73,8 +105,10 @@ cancelar(): void {
 
     console.log('Cita registrada:', nuevaCita);
     alert('¡Cita agendada con éxito!');
+
+    // 3. Limpieza y redirección a la agenda
     this.resetForm();
-    this.router.navigate(['/agenda']);
+    this.router.navigate(['/app/agenda']);
   }
 
   resetForm(): void {

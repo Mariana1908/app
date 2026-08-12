@@ -1,6 +1,6 @@
 <div class="reportes-container">
   
-  <!-- BANNER DE ENCABEZADO CON BOTÓN Y TÍTULO -->
+  <!-- ENCABEZADO -->
   <div class="header-banner">
     <div class="header-left">
       <button type="button" class="btn-menu-principal" (click)="volverAlPanel()">
@@ -9,25 +9,52 @@
       <h1 class="header-title">Reportes y Estadísticas</h1>
     </div>
 
-    <!-- BOTÓN DE EXPORTACIÓN A EXCEL -->
+    <!-- BOTÓN EXPORTAR EXCEL -->
     <button type="button" class="btn-export-excel" (click)="generarExcel()">
       📊 Exportar Excel
     </button>
   </div>
 
-  <!-- CONTENIDO PRINCIPAL DE REPORTES -->
+  <!-- CONTENIDO PRINCIPAL -->
   <div class="reportes-body">
 
-    <!-- BARRA DE FILTROS Y SELECCIÓN RÁPIDA -->
+    <!-- FILTROS: FECHAS Y SELECCIÓN DE ESTILISTA -->
     <div class="filters-card">
       <div class="filter-inputs">
         <div class="filter-group">
-          <label>Desde:</label>
-          <input type="date" [(ngModel)]="fechaInicio" />
+          <label for="fechaInicio">Desde:</label>
+          <input 
+            type="date" 
+            id="fechaInicio" 
+            [(ngModel)]="fechaInicio" 
+            (change)="cargarReporte()" 
+          />
         </div>
+
         <div class="filter-group">
-          <label>Hasta:</label>
-          <input type="date" [(ngModel)]="fechaFin" />
+          <label for="fechaFin">Hasta:</label>
+          <input 
+            type="date" 
+            id="fechaFin" 
+            [(ngModel)]="fechaFin" 
+            (change)="cargarReporte()" 
+          />
+        </div>
+
+        <!-- SELECTOR DE ESTILISTA -->
+        <div class="filter-group">
+          <label for="selectEstilista">Estilista:</label>
+          <select 
+            id="selectEstilista" 
+            [(ngModel)]="estilistaSeleccionado" 
+            (change)="cargarReporte()" 
+            class="select-estilista"
+          >
+            <option value="TODOS">Todos los estilistas</option>
+            <option *ngFor="let est of estilistas" [value]="est.id">
+              {{ est.nombre }}
+            </option>
+          </select>
         </div>
       </div>
 
@@ -39,28 +66,71 @@
       </div>
     </div>
 
-    <p class="subtitle">Resumen general del negocio</p>
+    <p class="subtitle">
+      Desglose de servicios del {{ fechaInicio }} al {{ fechaFin }} — <strong>{{ obtenerNombreEstilista() }}</strong>
+    </p>
 
-    <!-- TARJETAS DE INDICADORES (KPIs) -->
-    <div class="kpi-grid">
-      <div class="kpi-card">
-        <h3>Citas del Mes</h3>
-        <p class="kpi-value">{{ resumen.citasDelMes }}</p>
+    <!-- TARJETA TOTALIZADORA PRINCIPAL -->
+    <div class="main-summary-bar">
+      <div class="summary-item">
+        <span class="summary-label">Total de Citas Atendidas:</span>
+        <span class="summary-value">{{ desglose.totalCitas }}</span>
+      </div>
+      <div class="summary-item">
+        <span class="summary-label">Clientes Nuevos:</span>
+        <span class="summary-value">{{ clientesNuevos }}</span>
+      </div>
+    </div>
+
+    <!-- DESGLOSE DE SERVICIOS POR COLUMNAS/TARJETAS -->
+    <h2 class="section-title">Servicios Realizados</h2>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">✂️</div>
+        <div class="service-info">
+          <h3>Cortes</h3>
+          <p class="service-count">{{ desglose.corte }}</p>
+        </div>
       </div>
 
-      <div class="kpi-card">
-        <h3>Ingresos Estimados</h3>
-        <p class="kpi-value">${{ resumen.ingresosEstimados | number:'1.2-2' }}</p>
+      <div class="service-card">
+        <div class="service-icon">🎨</div>
+        <div class="service-info">
+          <h3>Tintes</h3>
+          <p class="service-count">{{ desglose.tinte }}</p>
+        </div>
       </div>
 
-      <div class="kpi-card">
-        <h3>Total del Día (Cierre)</h3>
-        <p class="kpi-value">${{ resumen.totalDia | number:'1.2-2' }}</p>
+      <div class="service-card">
+        <div class="service-icon">🖌️</div>
+        <div class="service-info">
+          <h3>Retoques</h3>
+          <p class="service-count">{{ desglose.retoque }}</p>
+        </div>
       </div>
 
-      <div class="kpi-card">
-        <h3>Clientes Nuevos</h3>
-        <p class="kpi-value">{{ resumen.clientesNuevos }}</p>
+      <div class="service-card">
+        <div class="service-icon">💇‍♀️</div>
+        <div class="service-info">
+          <h3>Peinados</h3>
+          <p class="service-count">{{ desglose.peinado }}</p>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">✨</div>
+        <div class="service-info">
+          <h3>Tratamientos</h3>
+          <p class="service-count">{{ desglose.tratamiento }}</p>
+        </div>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">💅</div>
+        <div class="service-info">
+          <h3>Otros</h3>
+          <p class="service-count">{{ desglose.otros }}</p>
+        </div>
       </div>
     </div>
 
