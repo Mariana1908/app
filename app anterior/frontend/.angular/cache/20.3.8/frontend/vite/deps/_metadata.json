@@ -1,56 +1,50 @@
 {
-  "hash": "4ef1ca1a",
-  "configHash": "f9ae305f",
+  "hash": "8caa5807",
+  "configHash": "e8d91830",
   "lockfileHash": "f1879868",
-  "browserHash": "31ccdda4",
+  "browserHash": "ed17ae45",
   "optimized": {
     "@angular/common": {
       "src": "../../../../../../node_modules/@angular/common/fesm2022/common.mjs",
       "file": "@angular_common.js",
-      "fileHash": "60e1075b",
+      "fileHash": "ca0e7b1a",
       "needsInterop": false
     },
     "@angular/common/http": {
       "src": "../../../../../../node_modules/@angular/common/fesm2022/http.mjs",
       "file": "@angular_common_http.js",
-      "fileHash": "985ab43c",
+      "fileHash": "127b0186",
       "needsInterop": false
     },
     "@angular/core": {
       "src": "../../../../../../node_modules/@angular/core/fesm2022/core.mjs",
       "file": "@angular_core.js",
-      "fileHash": "7d456b7b",
+      "fileHash": "53d65099",
       "needsInterop": false
     },
     "@angular/forms": {
       "src": "../../../../../../node_modules/@angular/forms/fesm2022/forms.mjs",
       "file": "@angular_forms.js",
-      "fileHash": "d0badbdf",
+      "fileHash": "afa33b64",
       "needsInterop": false
     },
     "@angular/platform-browser": {
       "src": "../../../../../../node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs",
       "file": "@angular_platform-browser.js",
-      "fileHash": "4b5a317f",
+      "fileHash": "2c54472f",
       "needsInterop": false
     },
     "@angular/router": {
       "src": "../../../../../../node_modules/@angular/router/fesm2022/router.mjs",
       "file": "@angular_router.js",
-      "fileHash": "a8f316ed",
+      "fileHash": "3a5136a0",
       "needsInterop": false
     },
     "zone.js": {
       "src": "../../../../../../node_modules/zone.js/fesm2015/zone.js",
       "file": "zone__js.js",
-      "fileHash": "f7620c23",
+      "fileHash": "89305da5",
       "needsInterop": true
-    },
-    "xlsx": {
-      "src": "../../../../../../node_modules/xlsx/xlsx.mjs",
-      "file": "xlsx.js",
-      "fileHash": "84f6d650",
-      "needsInterop": false
     }
   },
   "chunks": {
