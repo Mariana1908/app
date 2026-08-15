@@ -1,0 +1,56 @@
+Comandos de Frameworks
+para iniciar la aplicacion (backend)
+cd "app anterior/backend"
+npm run dev (para hacer la conexion con MySQL y Apache via xampp)
+
+para iniciar la aplicacion (frontend)
+cd "app anterior/frontend"
+ng serve (lo mandara directamente a la siguiente URL)
+http://localhost:4200/
+
+App Angular estos son algunos componentes que instale via bash (git bash)
+
+carpeta dist/(frontend)
+ng build
+
+instalar librerias
+npm install xlsx
+actualizar herramientas
+npm install -g npm@11.19.0
+
+iniciar framework (vue.js, Laravel, angular)
+npm run dev
+npm start (iniciar backend)
+npx http-server -p 8080  (solo para servidor)
+npx ng serve --host 0.0.0.0 --port 8080
+npx ng serve
+ng serve (iniciar frontend usando Git bash)
+node server.js (solo para servidor)
+
+entrar a carpetas (dependiendo del proyecto, estos son de angular)
+cd "app anterior/frontend"
+cd "app anterior/backend"
+
+crear modulos (angular via bash)
+npx ng g c modulos/reportes
+ng g c modulos/login --standalone
+ng g c modulos/dashboard
+ng g c modulos/agenda/lista-agenda --standalone
+touch controllers/servicioController.js
+touch routes/servicioRoutes.js
+touch src/app/servicios/servicio.service.ts
+touch routes/agendaRoutes.js 
+touch controllers/agendaController.js 
+touch controllers/reportesController.js
+touch routes/reportesRoutes.js
+
+credenciales (app angular)
+Administrador
+#3st3t!c4l30
+
+datos de prueba (SQL)
+INSERT INTO servicios (nombre, precio, activo, duracion_min) VALUES
+('Corte de Cabello', 150.00, 1, 30),
+('Tinte Completo', 450.00, 1, 90),
+('Manicura Básica', 200.00, 1, 45),
+('Peinado y Maquillaje', 600.00, 1, 60);
